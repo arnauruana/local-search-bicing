@@ -16,6 +16,7 @@ public class BicingBoard {
         this.board = board.clone();
 
         this.goal  = new ArrayList<int> (goal.size());
+
         this.goal  = goal.clone();
     }
 
