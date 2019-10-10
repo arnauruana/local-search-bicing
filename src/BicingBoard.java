@@ -1,26 +1,22 @@
+import java.util.ArrayList;
+
 public class BicingBoard {
-    /* Class independent from AIMA classes
-       - It has to implement the state of the problem and its operators
-     *
 
-    /* State data structure
-        vector with the parity of the coins (we can assume 0 = heads, 1 = tails
-     */
+    private ArrayList<int> board;
+    private static ArrayList<int> goal;
 
-    private int [] board;
-    private static int [] solution;
+    // ====================================================================== //
 
-    /* Constructor */
-    public BicingBoard(int []init, int[] goal) {
+    // Constructor by defualt
+    public BicingBoard() {}
 
-        board = new int[init.length];
-        solution = new int[init.length];
+    // Constructor with parameters
+    public BicingBoard(final ArrayList<int> board, final ArrayList<int> goal) {
+        this.board = new ArrayList<int> (board.size());
+        this.board = board.clone();
 
-        for (int i = 0; i< init.length; i++) {
-            board[i] = init[i];
-            solution[i] = goal[i];
-        }
-
+        this.goal  = new ArrayList<int> (goal.size());
+        this.goal  = goal.clone();
     }
 
     /* vvvvv TO COMPLETE vvvvv */
