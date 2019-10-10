@@ -1,12 +1,10 @@
-package IA.ProbIA5;
-
 import aima.search.framework.SuccessorFunction;
 import aima.search.framework.Successor;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProbIA5SuccesorFunction implements SuccessorFunction{
+public class BicingSuccesorFunction implements SuccessorFunction{
 
     public List getSuccessors(Object state){
         ArrayList retval = new ArrayList();
