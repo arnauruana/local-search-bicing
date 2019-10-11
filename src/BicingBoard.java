@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class BicingBoard {
 
-    private ArrayList<int> board;
-    private static ArrayList<int> goal;
+    private ArrayList<Integer> board;
+    private static ArrayList<Integer> goal;
 
     // ====================================================================== //
 
@@ -11,13 +11,14 @@ public class BicingBoard {
     public BicingBoard() {}
 
     // Constructor with parameters
-    public BicingBoard(final ArrayList<int> board, final ArrayList<int> goal) {
-        this.board = new ArrayList<int> (board.size());
-        this.board = board.clone();
+    public BicingBoard(final ArrayList<Integer> board, final ArrayList<Integer> goal) {
+        this.board = new ArrayList<> (board.size());
+        this.goal  = new ArrayList<> (goal.size());
 
-        this.goal  = new ArrayList<int> (goal.size());
-
-        this.goal  = goal.clone();
+        for (int i = 0; i< board.size(); i++) {
+            this.board.set(i, board.get(i));
+            this.goal.set(i, goal.get(i));
+        }
     }
 
     /* vvvvv TO COMPLETE vvvvv */
