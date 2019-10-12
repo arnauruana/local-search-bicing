@@ -8,6 +8,7 @@ public class State {
 
   // ============================== ATTRIBUTES ============================== //
 
+  // TODO (pensar atributs) TODO //
   private ArrayList<Integer> board;
   private static ArrayList<Integer> goal;
 
@@ -65,5 +66,7 @@ public class State {
    }
 
    // Some functions will be needed for creating a copy of the state
+
+   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TODO ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
 
 }

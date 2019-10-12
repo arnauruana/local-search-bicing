@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BicingSuccesorFunction implements SuccessorFunction{
+public class Sucessor implements SuccessorFunction{
 
     public List getSuccessors(Object state){
         ArrayList retval = new ArrayList();
-        ProbIA5Board board = (ProbIA5Board) state;
+        State board = (State) state;
 
         // Some code here
         // (flip all the consecutive pairs of coins and generate new states
