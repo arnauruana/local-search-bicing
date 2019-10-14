@@ -28,7 +28,7 @@ public class Van {
 
   public Van(final Point position, final Integer numBikes) {
     this(position);
-    this.setBikes(numBikes);
+    this.setNumBikes(numBikes);
   }
 
   public Van(final Integer x, final Integer y) {
@@ -49,8 +49,8 @@ public class Van {
     this.position.setLocation(x, y);
   }
 
-  public void setBikes(final Integer numBikes) {
-    this.checkCapacity(numBikes, "setBikes");
+  public void setNumBikes(final Integer numBikes) {
+    this.checkCapacity(numBikes, "setNumBikes");
     this.numBikes = numBikes;
   }
 
@@ -122,7 +122,7 @@ public class Van {
   // ---------------------------- Input / Output ---------------------------- //
 
   public void print() {
-    out.println("[Van(print)]");
+    out.println("[Van] INFO: printing attributes...");
       out.print("  ⤷ position: "); this.printPosition();
       out.print("  ⤷ numBikes: "); this.printNumBikes();
       out.print("  ⤷ CAPACITY: "); this.printCapacity();
@@ -167,31 +167,31 @@ public class Van {
   }
 
   private static void testVan0() {
-    out.println(">>>>> Van() <<<<<"); out.println("");
+    out.println("***** Van() *****"); out.println("");
     Van van = new Van();
     van.print(); out.println("");
   }
 
   private static void testVan1() {
-    out.println(">>>>> Van(Point(1,1)) <<<<<"); out.println("");
+    out.println("***** Van(Point(1,1)) *****"); out.println("");
     Van van = new Van(new Point(1, 1));
     van.print(); out.println("");
   }
 
   private static void testVan2() {
-    out.println(">>>>> Van(Point(2,2), Integer(2)) <<<<<"); out.println("");
+    out.println("***** Van(Point(2,2),Integer(2)) *****"); out.println("");
     Van van = new Van(new Point(2, 2), new Integer(2));
     van.print(); out.println("");
   }
 
   private static void testVan3() {
-    out.println(">>>>> Van(Integer(3), Integer(3)) <<<<<"); out.println("");
+    out.println("***** Van(Integer(3),Integer(3)) *****"); out.println("");
     Van van = new Van(new Integer(3), new Integer(3));
     van.print(); out.println("");
   }
 
   private static void testVan4() {
-    out.println(">>>>> Van(Integer(4), Integer(4), Intger(4)) <<<<<");
+    out.println("***** Van(Integer(4),Integer(4),Intger(4)) *****");
     out.println("");
     Van van = new Van(new Integer(4), new Integer(4), new Integer(4));
     van.print(); out.println("");
@@ -202,6 +202,33 @@ public class Van {
   private static void testModifiers() {
     out.println("------------------------ Modifiers -------------------------");
     out.println("");
+    Van.testSetPosition0();
+    Van.testSetPosition1();
+    Van.testSetNumBikes();
+  }
+
+  private static void testSetPosition0() {
+    out.println("***** void setPosition(Point(0,0)) *****"); out.println("");
+    Van van = new Van(new Point(-1, -1));
+    van.print(); out.println("");
+    van.setPosition(new Point(0, 0));
+    van.print(); out.println("");
+  }
+
+  private static void testSetPosition1() {
+    out.println("***** void setPosition(Integer(1),Integer(1)) *****\n");
+    Van van = new Van(new Point(-1, -1));
+    van.print(); out.println("");
+    van.setPosition(new Integer(1), new Integer(1));
+    van.print(); out.println("");
+  }
+
+  private static void testSetNumBikes() {
+    out.println("***** void setNumBikes(Integer(5)) *****\n");
+    Van van = new Van(new Point(-1, -1), new Integer(2));
+    van.print(); out.println("");
+    van.setNumBikes(new Integer(5));
+    van.print(); out.println("");
   }
 
   // ------------------------------------------------------------------------ //
@@ -209,6 +236,38 @@ public class Van {
   private static void testConsultants() {
     out.println("----------------------- Consultants ------------------------");
     out.println("");
+    Van.testGetPosition();
+    Van.testGetCoordX();
+    Van.testGetCoordY();
+    Van.testGetNumBikes();
+  }
+
+  private static void testGetPosition() {
+    out.println("***** void getPosition() *****\n");
+    Van van = new Van(new Point(1, 1));
+    out.println("Position: " + van.getPosition()); out.println("");
+    van.print(); out.println("");
+  }
+
+  private static void testGetCoordX() {
+    out.println("***** void getCoordX() *****\n");
+    Van van = new Van(new Point(2, 0));
+    out.println("CoordX: " + van.getCoordX()); out.println("");
+    van.print(); out.println("");
+  }
+
+  private static void testGetCoordY() {
+    out.println("***** void getCoordY() *****\n");
+    Van van = new Van(new Point(0, 3));
+    out.println("CoordY: " + van.getCoordY()); out.println("");
+    van.print(); out.println("");
+  }
+
+  private static void testGetNumBikes() {
+    out.println("***** void getNumBikes() *****\n");
+    Van van = new Van(new Point(0, 0), new Integer(10));
+    out.println("NumBikes: " + van.getNumBikes()); out.println("");
+    van.print();
   }
 
   // ------------------------------------------------------------------------ //
