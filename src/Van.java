@@ -28,7 +28,7 @@ public class Van {
 
   public Van(final Point position, final Integer numBikes) {
     this(position);
-    this.setBikes(numBikes);
+    this.setNumBikes(numBikes);
   }
 
   public Van(final Integer x, final Integer y) {
@@ -49,8 +49,8 @@ public class Van {
     this.position.setLocation(x, y);
   }
 
-  public void setBikes(final Integer numBikes) {
-    this.checkCapacity(numBikes, "setBikes");
+  public void setNumBikes(final Integer numBikes) {
+    this.checkCapacity(numBikes, "setNumBikes");
     this.numBikes = numBikes;
   }
 
@@ -139,3 +139,5 @@ public class Van {
   public void printCapacity() {
     out.println(this.CAPACITY);
   }
+
+}
