@@ -4,6 +4,8 @@ import java.lang.String;
 import static java.lang.System.err;
 import static java.lang.System.out;
 
+import IA.Bicing.Estacion;
+
 
 public class Van {
 
@@ -105,6 +107,10 @@ public class Van {
 
   public void moveTo(final Integer x, final Integer y) {
     this.position.move(x, y);
+  }
+
+  public void moveTo(final Estacion station) {
+    this.setPosition(station.getCoordX(), station.getCoordY());
   }
 
   public void takeBikes(final Integer numBikes) {
