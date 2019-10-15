@@ -116,13 +116,13 @@ public class Van {
   public void dropBikes(final Integer numBikes) {
     Integer sub = this.numBikes - numBikes;
     checkCapacity(sub, "dropBikes");
-    this.numBikes = sub.intValue();
+    this.numBikes = sub;
   }
 
   // ---------------------------- Input / Output ---------------------------- //
 
   public void print() {
-    out.println("[Van(print)]");
+    out.println("[Van] INFO: printing attributes...");
       out.print("  ⤷ position: "); this.printPosition();
       out.print("  ⤷ numBikes: "); this.printNumBikes();
       out.print("  ⤷ CAPACITY: "); this.printCapacity();
