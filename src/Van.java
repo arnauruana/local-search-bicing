@@ -22,7 +22,7 @@ public class Van {
 
   // ----------------------------- Constructors ----------------------------- //
 
-  public Van() {}
+  public Van() {}ba
 
   public Van(final Point position) {
     this.position = new Point(position);
@@ -82,7 +82,7 @@ public class Van {
 
   private void checkCapacity(final Integer numBikes, final String function) {
     String error;
-    if (numBikes.compareTo(0) < 0) { // numBikes < 0
+    if (numBikes < 0) {
       error =
         "[Van(" + function + ")] ERROR: number of bikes ("
         + numBikes.toString() + ") cannot be negative"
@@ -90,11 +90,11 @@ public class Van {
       printError(error);
       System.exit(1);
     }
-    if (numBikes.compareTo(this.CAPACITY) > 0) { // numBikes > CAPACITY(30)
+    if (numBikes > 0) {
       error =
         "[Van(" + function + ")] ERROR: number of bikes ("
         + numBikes.toString() + ") cannot be greater than capacity ("
-        + this.CAPACITY.toString() + ")"
+        + CAPACITY.toString() + ")"
       ;
       printError(error);
       System.exit(1);
