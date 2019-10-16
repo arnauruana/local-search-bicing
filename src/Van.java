@@ -22,7 +22,7 @@ public class Van {
 
   // ----------------------------- Constructors ----------------------------- //
 
-  public Van() {}ba
+  public Van() {}
 
   public Van(final Point position) {
     this.position = new Point(position);
