@@ -16,7 +16,6 @@ public class State {
   private ArrayList<Boolean> isVisited;
 
   private ArrayList<Van> fleet;
-  private ArrayList<Integer> visitCount;
 
   // =============================== METHODS ================================ //
 
@@ -29,28 +28,18 @@ public class State {
     }
   }
 
-  private void initVisitCount() {
-    this.visitCount = new ArrayList<> (this.fleet.size());
-    for (int i = 0; i < this.visitCount.size(); ++i) {
-      this.visitCount.set(i, 0);
-    }
-  }
-
   // ----------------------------- Constructors ----------------------------- //
 
   // TODO -> comprovar final
   public State(final Estaciones stations, final ArrayList<Van> fleet) {
     this.setStations(stations);
     this.initIsVisited();
-    this.setFleet(fleet);
-    this.initVisitCount();
   }
 
   public State(final State state) {
     this.setStations(state.stations);
     this.setIsVisited(state.isVisited);
     this.setFleet(state.fleet);
-    this.setVisitCount(state.visitCount);
   }
 
   // ------------------------------ Modifiers ------------------------------- //
@@ -73,13 +62,6 @@ public class State {
     this.fleet = new ArrayList<> (fleet.size());
     for (int i = 0; i < fleet.size(); ++i) {
       this.fleet.set(i, fleet.get(i));
-    }
-  }
-
-  private void setVisitCount(final ArrayList<Integer> visitCount) {
-    this.visitCount = new ArrayList<Integer> (visitCount.size());
-    for (int i = 0; i < visitCount.size(); ++i) {
-      this.visitCount.set(i, visitCount.get(i));
     }
   }
 
@@ -107,14 +89,6 @@ public class State {
 
   public Van getVan(final int i) {
     return this.fleet.get(i);
-  }
-
-  public ArrayList<Integer> getVisitCount() {
-    return this.visitCount;
-  }
-
-  public Integer visitCount(final int i) {
-    return this.visitCount.get(i);
   }
 
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TODO vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
