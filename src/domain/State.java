@@ -89,8 +89,32 @@ public class State {
     return this.stations;
   }
 
-  public Estacion getStation(int i) {
+  public Estacion getStation(final int i) {
     return this.stations.get(i);
+  }
+
+  public ArrayList<Boolean> getIsVisited() {
+    return this.isVisited;
+  }
+
+  public Boolean isVisited(final int i) {
+    return this.isVisited.get(i);
+  }
+
+  public ArrayList<Van> getFleet() {
+    return this.fleet;
+  }
+
+  public Van getVan(final int i) {
+    return this.fleet.get(i);
+  }
+
+  public ArrayList<Integer> getVisitCount() {
+    return this.visitCount;
+  }
+
+  public Integer visitCount(final int i) {
+    return this.visitCount.get(i);
   }
 
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TODO vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
