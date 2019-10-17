@@ -1,3 +1,5 @@
+package test;
+
 import java.awt.Point;
 import java.lang.Integer;
 import java.lang.String;

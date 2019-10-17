@@ -1,3 +1,5 @@
+package domain;
+
 import aima.search.framework.SuccessorFunction;
 import aima.search.framework.Successor;
 import java.util.ArrayList;

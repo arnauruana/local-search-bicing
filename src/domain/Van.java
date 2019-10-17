@@ -1,3 +1,5 @@
+package domain;
+
 import java.awt.Point;
 import java.lang.Integer;
 import java.lang.String;

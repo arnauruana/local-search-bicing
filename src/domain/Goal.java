@@ -1,3 +1,5 @@
+package domain;
+
 import aima.search.framework.GoalTest;
 
 

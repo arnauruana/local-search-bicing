@@ -1,3 +1,5 @@
+package domain;
+
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.util.ArrayList;
@@ -12,8 +14,8 @@ public class State {
   private Estaciones stations;
   private ArrayList<Boolean> isVisited;
 
-  private ArryaList<Van> fleet;
-  private ArryaList<Integer> visitCount;
+  private ArrayList<Van> fleet;
+  private ArrayList<Integer> visitCount;
 
   // =============================== METHODS ================================ //
 
@@ -25,7 +27,7 @@ public class State {
   public State(final Estaciones stations, final Integer numVans) {
     this.stations = stations;
     this.isVisited = new ArrayList<Boolean> (stations.size());
-    this.fleet = new ArryaList<> (numVans);
+    this.fleet = new ArrayList<> (numVans);
     this.visitCount = new ArrayList<> (numVans);
   }
 
