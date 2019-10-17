@@ -93,4 +93,49 @@ public class State {
     return this.fleet.get(i);
   }
 
+    // ------------------------------ Operators ------------------------------- //
+
+    public double single_move (Estacion origin, Estacion destination, Integer taken) {
+
+        Integer disponible = origin.getNumBicicletasNoUsadas();
+        origin.setNumBicicletasNoUsadas(disponible-taken);
+
+        Integer demand = destination.getDemanda();
+        destination.setDemanda(demand-taken);
+
+        return calculateCost(origin, destination, taken);
+    }
+
+
+    public double double_move (Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
+
+        // First move
+        Integer disponible = origin.getNumBicicletasNoUsadas();
+        origin.setNumBicicletasNoUsadas(disponible-taken);
+        Integer demand = first_destination.getDemanda();
+        first_destination.setDemanda(0);
+        // Update Van
+        taken -= demand;
+
+        // Second move
+        second_destination.setDemanda(second_destination.getDemanda()- taken);
+
+        return calculateCost(origin, first_destination, taken+demand) + calculateCost(first_destination, second_destination, taken);
+    }
+
+
+    private double calculateCost (Estacion origin, Estacion destination, Integer taken) {
+        Integer kilometer_cost = (taken + 9)/10;
+        double distance = Math.abs(origin.getCoordX() - destination.getCoordX() + Math.abs(origin.getCoordY() - destination.getCoordY());
+        return distance * kilometer_cost;
+    }
+
+    // ------------------------------ Check constraints  ------------------------------- //
+
+    public boolean VisitedStation (Integer station) {
+        return isVisited.get(station);
+    }
+
 }
+
+
