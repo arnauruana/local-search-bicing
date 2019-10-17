@@ -19,15 +19,6 @@ public class State {
 
   // =============================== METHODS ================================ //
 
-  // ----------------------------- Initializers ----------------------------- //
-
-  private void initIsVisited() {
-    this.isVisited = new ArrayList<> (this.stations.size());
-    for (int i = 0; i < this.isVisited.size(); ++i) {
-      this.isVisited.set(i, false);
-    }
-  }
-
   // ----------------------------- Constructors ----------------------------- //
 
   // TODO -> comprovar final
@@ -40,6 +31,15 @@ public class State {
     this.setStations(state.stations);
     this.setIsVisited(state.isVisited);
     this.setFleet(state.fleet);
+  }
+
+  // ----------------------------- Initializers ----------------------------- //
+
+  private void initIsVisited() {
+    this.isVisited = new ArrayList<> (this.stations.size());
+    for (int i = 0; i < this.isVisited.size(); ++i) {
+      this.isVisited.set(i, false);
+    }
   }
 
   // ------------------------------ Modifiers ------------------------------- //
@@ -90,27 +90,5 @@ public class State {
   public Van getVan(final int i) {
     return this.fleet.get(i);
   }
-
-  // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TODO vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
-
-  public void flip_it(int i){
-      // flip the coins i and i + 1
-  }
-
-  /* Heuristic function */
-  public double heuristic(){
-      // compute the number of coins out of place respect to solution
-      return 0;
-  }
-
-   /* Goal test */
-   public boolean is_goal(){
-       // compute if board = solution
-       return false;
-   }
-
-   // Some functions will be needed for creating a copy of the state
-
-   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TODO ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
 
 }
