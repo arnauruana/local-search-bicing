@@ -4,6 +4,7 @@ import java.lang.Boolean;
 import java.lang.Integer;
 import java.util.ArrayList;
 
+import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
 
@@ -19,50 +20,78 @@ public class State {
 
   // =============================== METHODS ================================ //
 
+  // ----------------------------- Initializers ----------------------------- //
 
+  private void initIsVisited() {
+    this.isVisited = new ArrayList<> (this.stations.size());
+    for (int i = 0; i < this.isVisited.size(); ++i) {
+      this.isVisited.set(i, false);
+    }
+  }
+
+  private void initVisitCount() {
+    this.visitCount = new ArrayList<> (this.fleet.size());
+    for (int i = 0; i < this.visitCount.size(); ++i) {
+      this.visitCount.set(i, 0);
+    }
+  }
 
   // ----------------------------- Constructors ----------------------------- //
 
   // TODO -> comprovar final
-  public State(final Estaciones stations, final Integer numVans) {
-    this.stations = stations;
-    this.isVisited = new ArrayList<Boolean> (stations.size());
-    this.fleet = new ArrayList<> (numVans);
-    this.visitCount = new ArrayList<> (numVans);
+  public State(final Estaciones stations, final ArrayList<Van> fleet) {
+    this.setStations(stations);
+    this.initIsVisited();
+    this.setFleet(fleet);
+    this.initVisitCount();
   }
 
   public State(final State state) {
-    copyOfStations(state.stations);
-    copyOfFleet(state.fleet);
+    this.setStations(state.stations);
+    this.setIsVisited(state.isVisited);
+    this.setFleet(state.fleet);
+    this.setVisitCount(state.visitCount);
   }
 
   // ------------------------------ Modifiers ------------------------------- //
 
-  public void setBoard(final ArrayList<Integer> board) {
-    this.board = new ArrayList<> (board.size());
-    for (int i = 0; i < board.size(); ++i)
-      this.board.set(i, board.get(i));
+  private void setStations(final Estaciones stations) {
+    this.stations = new Estaciones (stations.size()); // FIXME
+    for (int i = 0; i < stations.size(); ++i) {
+      this.stations.set(i, stations.get(i));
+    }
   }
 
-  public void setGoal(final ArrayList<Integer> goal) {
-    this.goal = new ArrayList<> (goal.size());
-    for (int i = 0; i < goal.size(); ++i)
-      this.goal.set(i, goal.get(i));
+  private void setIsVisited(final ArrayList<Boolean> isVisited) {
+    this.isVisited = new ArrayList<> (isVisited.size());
+    for (int i = 0; i < isVisited.size(); ++i) {
+      this.isVisited.set(i, isVisited.get(i));
+    }
+  }
+
+  private void setFleet(final ArrayList<Van> fleet) {
+    this.fleet = new ArrayList<> (fleet.size());
+    for (int i = 0; i < fleet.size(); ++i) {
+      this.fleet.set(i, fleet.get(i));
+    }
+  }
+
+  private void setVisitCount(final ArrayList<Integer> visitCount) {
+    this.visitCount = new ArrayList<Integer> (visitCount.size());
+    for (int i = 0; i < visitCount.size(); ++i) {
+      this.visitCount.set(i, visitCount.get(i));
+    }
   }
 
   // ----------------------------- Consultants ------------------------------ //
 
-  public ArrayList<Integer> getBoard() {
-    return this.board;
+  public Estaciones getStations() {
+    return this.stations;
   }
 
-  public ArrayList<Integer> getGoal() {
-    return this.goal;
+  public Estacion getStation(int i) {
+    return this.stations.get(i);
   }
-
-  // ------------------------------ Auxiliary ------------------------------- //
-
-
 
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TODO vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
 
