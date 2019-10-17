@@ -20,6 +20,5 @@ public class Successor implements SuccessorFunction{
         return retval;
 
     }
-
  //  testing
 }
