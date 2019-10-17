@@ -23,12 +23,14 @@ public class State {
 
   // TODO -> comprovar final
   public State(final Estaciones stations, final ArrayList<Van> fleet) {
-    this.setStations(stations);
+    // this.setStations(stations);
+    this.stations = stations;
     this.initIsVisited();
   }
 
   public State(final State state) {
-    this.setStations(state.stations);
+    // this.setStations(state.stations);
+    this.stations = state.stations;
     this.setIsVisited(state.isVisited);
     this.setFleet(state.fleet);
   }
@@ -44,12 +46,12 @@ public class State {
 
   // ------------------------------ Modifiers ------------------------------- //
 
-  private void setStations(final Estaciones stations) {
-    this.stations = new Estaciones (stations.size()); // FIXME
-    for (int i = 0; i < stations.size(); ++i) {
-      this.stations.set(i, stations.get(i));
-    }
-  }
+  // private void setStations(final Estaciones stations) {
+  //   this.stations = new Estaciones (stations.size()); // FIXME
+  //   for (int i = 0; i < stations.size(); ++i) {
+  //     this.stations.set(i, stations.get(i));
+  //   }
+  // }
 
   private void setIsVisited(final ArrayList<Boolean> isVisited) {
     this.isVisited = new ArrayList<> (isVisited.size());
