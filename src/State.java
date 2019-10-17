@@ -1,3 +1,4 @@
+import java.lang.Boolean;
 import java.lang.Integer;
 import java.util.ArrayList;
 
@@ -8,19 +9,29 @@ public class State {
 
   // ============================== ATTRIBUTES ============================== //
 
-  // TODO (pensar atributs) TODO //
-  private ArrayList<Integer> board;
-  private static ArrayList<Integer> goal;
+  private Estaciones stations;
+  private ArrayList<Boolean> isVisited;
+
+  private ArryaList<Van> fleet;
+  private ArryaList<Integer> visitCount;
 
   // =============================== METHODS ================================ //
 
+
+
   // ----------------------------- Constructors ----------------------------- //
 
-  public State() {}
+  // TODO -> comprovar final
+  public State(final Estaciones stations, final Integer numVans) {
+    this.stations = stations;
+    this.isVisited = new ArrayList<Boolean> (stations.size());
+    this.fleet = new ArryaList<> (numVans);
+    this.visitCount = new ArrayList<> (numVans);
+  }
 
-  public State(final ArrayList<Integer> board, final ArrayList<Integer> goal) {
-    this.setBoard(board);
-    this.setGoal(goal);
+  public State(final State state) {
+    copyOfStations(state.stations);
+    copyOfFleet(state.fleet);
   }
 
   // ------------------------------ Modifiers ------------------------------- //
@@ -46,6 +57,10 @@ public class State {
   public ArrayList<Integer> getGoal() {
     return this.goal;
   }
+
+  // ------------------------------ Auxiliary ------------------------------- //
+
+
 
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TODO vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
 
