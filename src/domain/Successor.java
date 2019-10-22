@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Sucessor implements SuccessorFunction{
+public class Successor implements SuccessorFunction{
 
     public List getSuccessors(Object state){
         ArrayList retval = new ArrayList();
@@ -20,5 +20,5 @@ public class Sucessor implements SuccessorFunction{
         return retval;
 
     }
-
+ //  testing
 }
