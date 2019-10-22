@@ -13,7 +13,7 @@ public class Van {
 
   // ============================== ATTRIBUTES ============================== //
 
-  private Point position;
+  private Integer idStation;
   private Integer numBikes;
 
   // ------------------------------------------------------------------------ //
@@ -26,32 +26,16 @@ public class Van {
 
   public Van() {}
 
-  public Van(final Point position) {
-    this.position = new Point(position);
+  public Van(final Integer idStation) {
+    this.idStation = idStation;
   }
 
-  public Van(final Point position, final Integer numBikes) {
-    this(position);
+  public Van(final Integer idStation, final Integer numBikes) {
+    this.idStation = idStation;
     this.setNumBikes(numBikes);
   }
 
-  public Van(final Integer x, final Integer y) {
-    this(new Point(x, y));
-  }
-
-  public Van(final Integer x, final Integer y, final Integer numBikes) {
-    this(new Point(x, y), numBikes);
-  }
-
   // ------------------------------ Modifiers ------------------------------- //
-
-  public void setPosition(final Point position) {
-    this.position.setLocation(position);
-  }
-
-  public void setPosition(final Integer x, final Integer y) {
-    this.position.setLocation(x, y);
-  }
 
   public void setNumBikes(final Integer numBikes) {
     this.checkCapacity(numBikes, "setNumBikes");
@@ -60,16 +44,8 @@ public class Van {
 
   // ----------------------------- Consultants ------------------------------ //
 
-  public Point getPosition() {
-    return this.position;
-  }
-
-  public Integer getCoordX() {
-    return (int)this.position.getX();
-  }
-
-  public Integer getCoordY() {
-    return (int)this.position.getY();
+  public Integer getIdStation() {
+    return this.idStation;
   }
 
   public Integer getNumBikes() {
@@ -103,16 +79,8 @@ public class Van {
     }
   }
 
-  public void moveTo(final Point position) {
-    this.moveTo((int)position.getX(), (int)position.getY());
-  }
-
-  public void moveTo(final Integer x, final Integer y) {
-    this.position.move(x, y);
-  }
-
-  public void moveTo(final Estacion station) {
-    this.setPosition(station.getCoordX(), station.getCoordY());
+  public void moveTo(final Integer idStation) {
+    this.idStation = idStation;
   }
 
   public void takeBikes(final Integer numBikes) {
@@ -131,13 +99,13 @@ public class Van {
 
   public void print() {
     out.println("[Van] INFO: printing attributes...");
-      out.print("  ⤷ position: "); this.printPosition();
+      out.print("  ⤷ idStation: "); this.printIdStation();
       out.print("  ⤷ numBikes: "); this.printNumBikes();
       out.print("  ⤷ CAPACITY: "); this.printCapacity();
   }
 
-  public void printPosition() {
-    out.println(this.position);
+  public void printIdStation() {
+    out.println(this.idStation);
   }
 
   public void printNumBikes() {
