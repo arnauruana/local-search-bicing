@@ -44,16 +44,18 @@ public class State {
     }
   }
 
-  // ------------------------------ Modifiers ------------------------------- //
+  //  ------------------------------ Modifiers ------------------------------- //
 
-  // private void setStations(final Estaciones stations) {
-  //   this.stations = new Estaciones (stations.size()); // FIXME
-  //   for (int i = 0; i < stations.size(); ++i) {
-  //     this.stations.set(i, stations.get(i));
-  //   }
-  // }
+   /*
+   private void setStations(final Estaciones stations) {
+     this.stations = new Estaciones (stations.size()); // FIXME
+     for (int i = 0; i < stations.size(); ++i) {
+       this.stations.set(i, stations.get(i));
+     }
+   }
+  */
 
-  private void setIsVisited(final ArrayList<Boolean> isVisited) {
+    private void setIsVisited(final ArrayList<Boolean> isVisited) {
     this.isVisited = new ArrayList<> (isVisited.size());
     for (int i = 0; i < isVisited.size(); ++i) {
       this.isVisited.set(i, isVisited.get(i));
@@ -114,6 +116,7 @@ public class State {
         origin.setNumBicicletasNoUsadas(disponible-taken);
         Integer demand = first_destination.getDemanda();
         first_destination.setDemanda(0);
+
         // Update Van
         taken -= demand;
 
