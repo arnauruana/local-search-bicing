@@ -19,7 +19,7 @@ public class Successor implements SuccessorFunction {
         int nStations = stations.size();
 
         for (Van actV : fleet) {
-            int nOrigin = actV.getIdStation();
+            int nOrigin = actV.getIdOrigin();
             Estacion origin = stations.get(nOrigin);
 
             // TODO Actualitzar VAN

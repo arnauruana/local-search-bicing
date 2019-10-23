@@ -1,19 +1,16 @@
 package domain;
 
-import java.awt.Point;
 import java.lang.Integer;
 import java.lang.String;
 import static java.lang.System.err;
 import static java.lang.System.out;
-
-import IA.Bicing.Estacion;
 
 
 public class Van {
 
   // ============================== ATTRIBUTES ============================== //
 
-  private Integer idStation;
+  private Integer idOrigin;
   private Integer numBikes;
 
   // ------------------------------------------------------------------------ //
@@ -26,12 +23,12 @@ public class Van {
 
   public Van() {}
 
-  public Van(final Integer idStation) {
-    this.idStation = idStation;
+  public Van(final Integer idOrigin) {
+    this.idOrigin = idOrigin;
   }
 
-  public Van(final Integer idStation, final Integer numBikes) {
-    this.idStation = idStation;
+  public Van(final Integer idOrigin, final Integer numBikes) {
+    this.idOrigin = idOrigin;
     this.setNumBikes(numBikes);
   }
 
@@ -44,8 +41,8 @@ public class Van {
 
   // ----------------------------- Consultants ------------------------------ //
 
-  public Integer getIdStation() {
-    return this.idStation;
+  public Integer getIdOrigin() {
+    return this.idOrigin;
   }
 
   public Integer getNumBikes() {
@@ -80,7 +77,7 @@ public class Van {
   }
 
   public void moveTo(final Integer idStation) {
-    this.idStation = idStation;
+    this.idOrigin = idStation;
   }
 
   public void takeBikes(final Integer numBikes) {
@@ -105,7 +102,7 @@ public class Van {
   }
 
   public void printIdStation() {
-    out.println(this.idStation);
+    out.println(this.idOrigin);
   }
 
   public void printNumBikes() {
