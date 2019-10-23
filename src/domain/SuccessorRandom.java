@@ -9,10 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
-public class Successor implements SuccessorFunction {
+public class SuccessorRandom implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
-        ArrayList<State> retval = new ArrayList();
+        ArrayList<State> retval = new ArrayList<>();
         State board = (State) state;
 
 
@@ -36,12 +36,12 @@ public class Successor implements SuccessorFunction {
         if (randomOp == 1) {
 
             Estacion destination = stations.get(randomDest);
-            Integer demand = destination.getDemanda();
+            int demand = destination.getDemanda();
             if (demand > 30) demand = 30;
 
             int randomBikes  = ThreadLocalRandom.current().nextInt(0, demand + 1);
 
-            State newBoard = State(board);
+            State newBoard = new State(board);
             newBoard.single_move(origin, destination, randomBikes);
             retval.add(newBoard);
 
@@ -54,15 +54,16 @@ public class Successor implements SuccessorFunction {
             Estacion first_destination = stations.get(randomDest);
             Estacion second_destination = stations.get(randomSecondDest);
 
-            Integer demand = first_destination.getDemanda() + second_destination.getDemanda();
+            int demand = first_destination.getDemanda() + second_destination.getDemanda();
             if (demand > 30) demand = 30;
 
             int randomBikes  = ThreadLocalRandom.current().nextInt(0, demand + 1);
 
-            State newBoard = State(board);
+            State newBoard = new State(board);
             newBoard.double_move(origin, first_destination, second_destination, randomBikes);
             retval.add(newBoard);
         }
+        return retval;
     }
 
 }

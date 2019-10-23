@@ -10,17 +10,15 @@ import IA.Bicing.Estaciones;
 public class Successor implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
-        ArrayList<State> retval = new ArrayList();
+        ArrayList<State> retval = new ArrayList<>();
         State board = (State) state;
 
 
         ArrayList<Van> fleet = board.getFleet();
-        int nVans = fleet.size();
         Estaciones stations = board.getStations();
         int nStations = stations.size();
 
-        for (Integer i = 0; i < nVans; ++i) {
-            Van actV = fleet.get(i);
+        for (Van actV : fleet) {
             int nOrigin = actV.getIdStation();
             Estacion origin = stations.get(nOrigin);
 
@@ -29,7 +27,7 @@ public class Successor implements SuccessorFunction {
 
                 // TODO Optimizació capar generació amb limit recepcio
                 // generateSingle
-                for (Integer j = 0; j < nStations; ++j) {
+                for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         Estacion destination = stations.get(j);
 
@@ -38,7 +36,7 @@ public class Successor implements SuccessorFunction {
                         if (demand > 30) demand = 30;
 
                         for (Integer k = 1; k <= demand; ++k) {
-                            State newBoard = State(board);
+                            State newBoard = new State(board);
                             newBoard.single_move(origin, destination, k);
                             retval.add(newBoard);
                         }
@@ -47,12 +45,12 @@ public class Successor implements SuccessorFunction {
 
                 // TODO Optimització capar generació
                 // generateDouble
-                for (Integer j = 0; j < nStations; ++j) {
+                for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         Estacion first_destination = stations.get(j);
 
                         for (Integer s = 0; s < nStations; ++s) {
-                            if (s != j) {
+                            if (!s.equals(j)) {
                                 Estacion second_destination = stations.get(s);
 
                                 // Evitem portar més bicicletes de les que es necessiten
@@ -60,7 +58,7 @@ public class Successor implements SuccessorFunction {
                                 if (demand > 30) demand = 30;
 
                                 for (Integer k = 1; k <= demand; ++k) {
-                                    State newBoard = State(board);
+                                    State newBoard = new State(board);
                                     newBoard.double_move(origin, first_destination, second_destination, k);
                                     retval.add(newBoard);
                                 }
@@ -71,8 +69,6 @@ public class Successor implements SuccessorFunction {
             }
         }
         return retval;
-
-
     }
 }
 
