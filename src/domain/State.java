@@ -63,11 +63,15 @@ public class State {
 
   //  ------------------------------ Modifiers ------------------------------- //
 
-    private void setIsVisited(final ArrayList<Boolean> isVisited) {
+  private void setIsVisited(final ArrayList<Boolean> isVisited) {
     initIsVisited(isVisited.size());
     for (int i = 0; i < isVisited.size(); ++i) {
       this.isVisited.set(i, isVisited.get(i));
     }
+  }
+
+  private void setVanVisited(final int van) {
+    this.isVisited.set(van, true);
   }
 
   private void setFleet(final ArrayList<Van> fleet) {
