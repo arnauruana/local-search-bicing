@@ -1,5 +1,6 @@
 package domain;
 
+import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
-public class Successor implements SuccessorFunction {
+public class StateSuccessor implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
         ArrayList retval= new ArrayList();
@@ -38,7 +39,7 @@ public class Successor implements SuccessorFunction {
                         for (Integer k = 1; k <= demand; ++k) {
                             State newBoard = new State(board);
                             newBoard.single_move(origin, destination, k);
-                            String S = new String("Fill"+k);
+                            String S = "Single" + k;
                             retval.add(new Successor(S, newBoard));
                         }
                     }
@@ -61,7 +62,8 @@ public class Successor implements SuccessorFunction {
                                 for (Integer k = 1; k <= demand; ++k) {
                                     State newBoard = new State(board);
                                     newBoard.double_move(origin, first_destination, second_destination, k);
-                                    retval.add(newBoard);
+                                    String S = "Double" + k;
+                                    retval.add(new Successor(S, newBoard));
                                 }
                             }
                         }

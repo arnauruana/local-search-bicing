@@ -56,7 +56,7 @@ public class Main {
         SuccessorFunction successor;
         if (args[0].equals("h")) {
             search = new HillClimbingSearch();
-            successor = new Successor();
+            successor = new StateSuccessor();
         }
         else {
             search = new SimulatedAnnealingSearch(maxIt, numIt, k, lambda);
@@ -64,7 +64,7 @@ public class Main {
         }
 
         // Initialize Problem. (AIMA)
-        Problem problem = new Problem(initialState, new Successor(), new Goal());
+        Problem problem = new Problem(initialState, successor, new Goal());
 
         SearchAgent agent = new SearchAgent(problem, search);
 
