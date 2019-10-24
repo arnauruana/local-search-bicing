@@ -34,6 +34,10 @@ public class Van {
     this.numBikes = numBikes;
   }
 
+  public void setOriginStation(final Integer id) {
+    this.idOrigin = id;
+  }
+
   // ----------------------------- Consultants ------------------------------ //
 
   public Integer getIdOrigin() {

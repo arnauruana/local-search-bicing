@@ -64,7 +64,7 @@ public class Main {
         }
 
         // Initialize Problem. (AIMA)
-        Problem problem = new Problem(initialState, successor, new Goal());
+        Problem problem = new Problem(initialState, new Successor(), new Goal());
 
         SearchAgent agent = new SearchAgent(problem, search);
 

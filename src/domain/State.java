@@ -26,8 +26,8 @@ public class State {
   // Initial constructor
   public State(int nest, int nbic, int dem, int seed, int nvan) {
     this.stations = new Estaciones(nest, nbic, dem, seed);
-    this.isVisited = new ArrayList<> (nest);
-    this.fleet = new ArrayList<> (nvan);
+    initIsVisited(nest);
+    initFleet(nvan);
   }
 
   // Copy constructor
@@ -39,25 +39,39 @@ public class State {
 
   // ----------------------------- Initializers ----------------------------- //
 
+  private void initIsVisited(final int nest) {
+    this.isVisited = new ArrayList<>(nest);
+    for (int i = 0; i < nest; i++) {
+      this.isVisited.add(false);
+    }
+  }
+
+  private void initFleet(final int nvan) {
+    this.fleet = new ArrayList<>(nvan);
+    for (int i = 0; i < nvan; i++) {
+      this.fleet.add(new Van(-1));
+    }
+  }
+
   public void initRandom(final int seed) {
     Random rand = new Random(seed);
     for (Van v: this.fleet) {
-      int est = rand.nextInt(this.stations.size());
-      v = new Van(est);
+      int est = rand.nextInt(this.stations.size()-1);
+      v.setOriginStation(est);
     }
   }
 
   //  ------------------------------ Modifiers ------------------------------- //
 
     private void setIsVisited(final ArrayList<Boolean> isVisited) {
-    this.isVisited = new ArrayList<> (isVisited.size());
+    initIsVisited(isVisited.size());
     for (int i = 0; i < isVisited.size(); ++i) {
       this.isVisited.set(i, isVisited.get(i));
     }
   }
 
   private void setFleet(final ArrayList<Van> fleet) {
-    this.fleet = new ArrayList<> (fleet.size());
+    initFleet(fleet.size());
     for (int i = 0; i < fleet.size(); ++i) {
       this.fleet.set(i, fleet.get(i));
     }
