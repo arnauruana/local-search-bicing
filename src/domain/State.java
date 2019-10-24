@@ -17,8 +17,8 @@ public class State {
 
   private ArrayList<Van> fleet;
 
-  private Integer gains = 0;
-  private Integer losses = 0;
+  private double gains = 0;
+  private double losses = 0;
   private Integer benefits = 0;
 
   // =============================== METHODS ================================ //
@@ -27,16 +27,16 @@ public class State {
 
   // TODO -> comprovar final
   public State(final Estaciones stations, final ArrayList<Van> fleet) {
-    // this.setStations(stations);
     this.stations = stations;
     this.isVisited = new ArrayList<> (this.stations.size());
+    this.fleet = fleet;
   }
 
   public State(final State state) {
     // this.setStations(state.stations);
-    this.stations = state.stations;
-    this.setIsVisited(state.isVisited);
-    this.setFleet(state.fleet);
+    this.stations = state.getStations();
+    this.setIsVisited(state.getIsVisited());
+    this.setFleet(state.getFleet());
   }
 
   //  ------------------------------ Modifiers ------------------------------- //
@@ -92,17 +92,17 @@ public class State {
 
   // ------------------------------ Operators ------------------------------- //
 
-  public double single_move(Estacion origin, Estacion destination, Integer taken) {
+  public void single_move(Estacion origin, Estacion destination, Integer taken) {
     Integer disponible = origin.getNumBicicletasNoUsadas();
     origin.setNumBicicletasNoUsadas(disponible-taken);
 
     Integer demand = destination.getDemanda();
     destination.setDemanda(demand-taken);
 
-    return calculateCost(origin, destination, taken);
+    calculateCost(origin, destination, taken);
   }
 
-  public double double_move(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
+  public void double_move(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
 
     // First move
     Integer disponible = origin.getNumBicicletasNoUsadas();
@@ -115,13 +115,13 @@ public class State {
 
     // Second move
     second_destination.setDemanda(second_destination.getDemanda()- taken);
-    return calculateCost(origin, first_destination, taken+demand) + calculateCost(first_destination, second_destination, taken);
+    calculateCost(origin, first_destination, taken+demand) + calculateCost(first_destination, second_destination, taken);
   }
 
   private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
     Integer kilometer_cost = (taken + 9)/10;
     double distance = Math.abs(origin.getCoordX() - destination.getCoordX() + Math.abs(origin.getCoordY() - destination.getCoordY()));
-    Integer cost = distance * kilometer_cost;
+    double cost = distance * kilometer_cost;
     this.gains += cost; // TODO: mavximitzar/minitmitzar
     this.losses += cost; // TODO: mavximitzar/minitmitzar
   }

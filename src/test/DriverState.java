@@ -22,7 +22,7 @@ public class DriverState {
         out.println("[State] INFO: printing attributes...");
         out.print("  ⤷ stations: "); printStations();
         out.print("  ⤷ isVisited: "); printIsVisited();
-        out.print("  ⤷ fleet: "); printFleet();
+        //out.print("  ⤷ fleet: "); printFleet();
     }
 
     public static void printStations() {
