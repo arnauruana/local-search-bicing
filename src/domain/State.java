@@ -1,12 +1,10 @@
 package domain;
 
-import java.lang.Boolean;
-import java.lang.Integer;
-import java.util.ArrayList;
-
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
+import java.util.ArrayList;
+import java.util.Random;
 
 public class State {
 
@@ -19,24 +17,35 @@ public class State {
 
   private double gains = 0;
   private double losses = 0;
-  private Integer benefits = 0;
+  private double benefits = 0;
 
   // =============================== METHODS ================================ //
 
   // ----------------------------- Constructors ----------------------------- //
 
-  // TODO -> comprovar final
-  public State(final Estaciones stations, final ArrayList<Van> fleet) {
-    this.stations = stations;
-    this.isVisited = new ArrayList<> (this.stations.size());
-    this.fleet = fleet;
+  // Initial constructor
+  public State(int nest, int nbic, int dem, int seed, int nvan) {
+    this.stations = new Estaciones(nest, nbic, dem, seed);
+    this.isVisited = new ArrayList<> (nest);
+    this.fleet = new ArrayList<> (nvan);
   }
 
+  // Copy constructor
   public State(final State state) {
     // this.setStations(state.stations);
     this.stations = state.getStations();
     this.setIsVisited(state.getIsVisited());
     this.setFleet(state.getFleet());
+  }
+
+  // ----------------------------- Initializers ----------------------------- //
+
+  public void initRandom(final int seed) {
+    Random rand = new Random(seed);
+    for (Van v: this.fleet) {
+      int est = rand.nextInt(this.stations.size());
+      v = new Van(est);
+    }
   }
 
   //  ------------------------------ Modifiers ------------------------------- //

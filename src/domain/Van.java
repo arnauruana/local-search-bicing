@@ -11,7 +11,7 @@ public class Van {
   // ============================== ATTRIBUTES ============================== //
 
   private Integer idOrigin;
-  private Integer numBikes;
+  private Integer numBikes = 0;
 
   // ------------------------------------------------------------------------ //
 
@@ -25,11 +25,6 @@ public class Van {
 
   public Van(final Integer idOrigin) {
     this.idOrigin = idOrigin;
-  }
-
-  public Van(final Integer idOrigin, final Integer numBikes) {
-    this.idOrigin = idOrigin;
-    this.setNumBikes(numBikes);
   }
 
   // ------------------------------ Modifiers ------------------------------- //

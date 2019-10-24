@@ -1,9 +1,9 @@
 package domain;
 
 import aima.search.framework.SuccessorFunction;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 import IA.Bicing.Estacion;
@@ -67,4 +67,3 @@ public class SuccessorRandom implements SuccessorFunction {
     }
 
 }
-
