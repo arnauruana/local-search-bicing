@@ -10,7 +10,7 @@ import IA.Bicing.Estaciones;
 public class Successor implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
-        ArrayList<State> retval = new ArrayList<>();
+        ArrayList retval= new ArrayList();
         State board = (State) state;
 
 
@@ -38,7 +38,8 @@ public class Successor implements SuccessorFunction {
                         for (Integer k = 1; k <= demand; ++k) {
                             State newBoard = new State(board);
                             newBoard.single_move(origin, destination, k);
-                            retval.add(newBoard);
+                            String S = new String("Fill"+k);
+                            retval.add(new Successor(S, newBoard));
                         }
                     }
                 }
