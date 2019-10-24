@@ -7,6 +7,10 @@ import aima.search.framework.SuccessorFunction;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+
 public class Main {
 
     private static State initializeState(String[] args) {
@@ -17,6 +21,23 @@ public class Main {
         int nVans = Integer.parseInt(args[6]);
         return new State(nest, nbic, dem, seed, nVans);
     }
+
+    private static void printInstrumentation(Properties properties) {
+        Iterator keys = properties.keySet().iterator();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            String property = properties.getProperty(key);
+            System.out.println(key + " : " + property);
+        }
+    }
+
+    private static void printActions(List actions) {
+        for (Object action1 : actions) {
+            String action = action1.toString();
+            System.out.println(action);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         // Initialize initialState, Random or Fixed
         State initialState = initializeState(args);
@@ -47,6 +68,7 @@ public class Main {
 
         SearchAgent agent = new SearchAgent(problem, search);
 
-        //print action i printIntrumentation
+        printInstrumentation(agent.getInstrumentation());
+        printActions(agent.getActions());
     }
 }
