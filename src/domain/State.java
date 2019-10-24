@@ -70,7 +70,7 @@ public class State {
     }
   }
 
-  private void setVanVisited(final int van) {
+  public void setVanVisited(final int van) {
     this.isVisited.set(van, true);
   }
 

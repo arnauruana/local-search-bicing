@@ -64,7 +64,7 @@ public class Main {
         }
 
         // Initialize Problem. (AIMA)
-        Problem problem = new Problem(initialState, successor, new Goal(), new Heuristic1());
+        Problem problem = new Problem(initialState, successor, new StateGoal(), new Heuristic1());
 
         SearchAgent agent = new SearchAgent(problem, search);
 

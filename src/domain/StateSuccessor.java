@@ -19,7 +19,8 @@ public class StateSuccessor implements SuccessorFunction {
         Estaciones stations = board.getStations();
         int nStations = stations.size();
 
-        for (Van actV : fleet) {
+        for (int i = 0; i < fleet.size(); i++) {
+            Van actV = fleet.get(i);
             int nOrigin = actV.getIdOrigin();
             Estacion origin = stations.get(nOrigin);
             // TODO Actualitzar VAN
@@ -38,6 +39,7 @@ public class StateSuccessor implements SuccessorFunction {
                         for (Integer k = 1; k <= demand; ++k) {
                             State newBoard = new State(board);
                             newBoard.single_move(origin, destination, k);
+                            newBoard.setVanVisited(i);
                             String S = "Single" + k;
                             retval.add(new Successor(S, newBoard));
                         }
@@ -61,6 +63,7 @@ public class StateSuccessor implements SuccessorFunction {
                                 for (Integer k = 1; k <= demand; ++k) {
                                     State newBoard = new State(board);
                                     newBoard.double_move(origin, first_destination, second_destination, k);
+                                    newBoard.setVanVisited(i);
                                     String S = "Double" + k;
                                     retval.add(new Successor(S, newBoard));
                                 }
