@@ -71,22 +71,6 @@ public class Van {
     }
   }
 
-  public void moveTo(final Integer idStation) {
-    this.idOrigin = idStation;
-  }
-
-  public void takeBikes(final Integer numBikes) {
-    Integer sum = this.numBikes + numBikes;
-    checkCapacity(sum, "takeBikes");
-    this.numBikes = sum;
-  }
-
-  public void dropBikes(final Integer numBikes) {
-    Integer sub = this.numBikes - numBikes;
-    checkCapacity(sub, "dropBikes");
-    this.numBikes = sub;
-  }
-
   // ---------------------------- Input / Output ---------------------------- //
 
   public void print() {

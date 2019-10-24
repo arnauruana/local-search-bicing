@@ -32,8 +32,7 @@ public class State {
 
   // Copy constructor
   public State(final State state) {
-    // this.setStations(state.stations);
-    this.stations = state.getStations();
+    this.stations = (Estaciones) state.getStations().clone();
     this.setIsVisited(state.getIsVisited());
     this.setFleet(state.getFleet());
   }
@@ -49,15 +48,6 @@ public class State {
   }
 
   //  ------------------------------ Modifiers ------------------------------- //
-
-   /*
-   private void setStations(final Estaciones stations) {
-     this.stations = new Estaciones (stations.size()); // FIXME
-     for (int i = 0; i < stations.size(); ++i) {
-       this.stations.set(i, stations.get(i));
-     }
-   }
-  */
 
     private void setIsVisited(final ArrayList<Boolean> isVisited) {
     this.isVisited = new ArrayList<> (isVisited.size());
@@ -99,6 +89,10 @@ public class State {
     return this.fleet.get(i);
   }
 
+  public double heuristic() {
+        return this.gains;
+  }
+
   // ------------------------------ Operators ------------------------------- //
 
   public void single_move(Estacion origin, Estacion destination, Integer taken) {
@@ -124,15 +118,16 @@ public class State {
 
     // Second move
     second_destination.setDemanda(second_destination.getDemanda()- taken);
-    calculateCost(origin, first_destination, taken+demand) + calculateCost(first_destination, second_destination, taken);
+    calculateCost(origin, first_destination, taken+demand);
+    calculateCost(first_destination, second_destination, taken);
   }
 
   private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
-    Integer kilometer_cost = (taken + 9)/10;
+    int kilometer_cost = (taken + 9)/10;
     double distance = Math.abs(origin.getCoordX() - destination.getCoordX() + Math.abs(origin.getCoordY() - destination.getCoordY()));
     double cost = distance * kilometer_cost;
-    this.gains += cost; // TODO: mavximitzar/minitmitzar
-    this.losses += cost; // TODO: mavximitzar/minitmitzar
+    this.gains += cost;
+    this.losses -= cost;
   }
 
 }

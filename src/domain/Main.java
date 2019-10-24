@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class Main {
 
-    private static State initializeState(String[] args) {
+    private static State initState(String[] args) {
         int nest = Integer.parseInt(args[2]);
         int nbic = Integer.parseInt(args[3]);
         int dem  = Integer.parseInt(args[4]);
@@ -40,11 +40,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         // Initialize initialState, Random or Fixed
-        State initialState = initializeState(args);
-        (args[1].equals("r"))
-            ? initialState.initalizeRandom()
-            : initialState.initalizeFixed();
-
+        State initialState = initState(args);
+        /*(args[1].equals("r"))
+            ? initialState.initRandom(Integer.parseInt(args[5]))
+            : initialState.initFixed(Integer.parseInt(args[5]));*/
+        initialState.initRandom(Integer.parseInt(args[5]));
         // Only for Simulated Annealing Search
         int maxIt  = Integer.parseInt(args[7]);
         int numIt  = Integer.parseInt(args[8]);
