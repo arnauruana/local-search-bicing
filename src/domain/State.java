@@ -67,8 +67,8 @@ public class State {
   private int maxIndex(ArrayList<Integer> arrayList) {
     int max = arrayList.get(0);
     int maxIndex = 0;
-    for(int i = 1; i < arrayList.size(); i++){
-      if( arrayList.get(i) > max ){
+    for (int i = 1; i < arrayList.size(); i++){
+      if(arrayList.get(i) > max ){
         max = arrayList.get(i);
         maxIndex = i;
       }
@@ -100,7 +100,7 @@ public class State {
       int i = maxIndex(d);
       if (d.get(i) <= 0)
         break;
-      maxDemand.add(i);
+      maxDemand.add(i+k);
       d.remove(i);
       id.remove(i);
       k++;
@@ -111,6 +111,7 @@ public class State {
   public void initFixed1() {
     int nvan = this.fleet.size();
     ArrayList<Integer> idStations = initIdStations(this.stations.size());
+    // TODO we shouldn't use the demand
     ArrayList<Integer> demand = initDemand(this.stations.size());
     ArrayList<Integer> maxDemand = getMaxDemand(demand, idStations, nvan);
     for (Van v: this.fleet) {
