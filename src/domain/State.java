@@ -181,11 +181,15 @@ public class State {
   // ------------------------------ Operators ------------------------------- //
 
   public void single_move(Estacion origin, Estacion destination, Integer taken) {
-    Integer disponible = origin.getNumBicicletasNoUsadas();
-    origin.setNumBicicletasNoUsadas(disponible-taken);
 
-    // Integer demand = destination.getDemanda();
-   // destination.setDemanda(demand-taken);
+    Integer nonUsed = origin.getNumBicicletasNoUsadas();
+    origin.setNumBicicletasNoUsadas(nonUsed-taken);
+
+    Integer nextO = origin.getNumBicicletasNext();
+    origin.setNumBicicletasNext(nextO-taken);
+
+    Integer nextD = destination.getNumBicicletasNext();
+    destination.setNumBicicletasNext(nextD+taken);
 
     calculateCost(origin, destination, taken);
   }
@@ -193,8 +197,9 @@ public class State {
   public void double_move(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
 
     // First move
-    Integer disponible = origin.getNumBicicletasNoUsadas();
-    origin.setNumBicicletasNoUsadas(disponible-taken);
+    Integer excedent = origin.getNumBicicletasNoUsadas();
+    origin.setNumBicicletasNoUsadas(excedent-taken);
+
     Integer demand = first_destination.getDemanda();
     // first_destination.setDemanda(0);
 

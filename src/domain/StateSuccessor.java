@@ -45,7 +45,7 @@ public class StateSuccessor implements SuccessorFunction {
                         }
                     }
                 }
-
+/*
                 // TODO Optimització capar generació
                 // generateDouble
                 for (int j = 0; j < nStations; ++j) {
@@ -71,6 +71,7 @@ public class StateSuccessor implements SuccessorFunction {
                         }
                     }
                 }
+                */
             }
         }
         return retval;
