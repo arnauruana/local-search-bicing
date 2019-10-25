@@ -15,9 +15,7 @@ public class State {
 
   private ArrayList<Van> fleet;
 
-  private double gains = 0;
-  private double losses = 0;
-  private double benefits = 0;
+  private double totalCost = 0;
 
   // =============================== METHODS ================================ //
 
@@ -35,6 +33,7 @@ public class State {
     this.stations = (Estaciones) state.getStations().clone();
     this.setIsVisited(state.getIsVisited());
     this.setFleet(state.getFleet());
+    this.setTotalCost(state.getTotalCost());
   }
 
   // ----------------------------- Initializers ----------------------------- //
@@ -68,6 +67,9 @@ public class State {
     for (int i = 0; i < isVisited.size(); ++i) {
       this.isVisited.set(i, isVisited.get(i));
     }
+  }
+  private void setTotalCost(final double tc) {
+    this.totalCost = tc;
   }
 
   public void setVanVisited(final int van) {
@@ -107,18 +109,21 @@ public class State {
     return this.fleet.get(i);
   }
 
+  public double getTotalCost() { return this.totalCost; }
+
   public double heuristic() {
-        return this.gains;
+        return  -this.totalCost;
   }
 
+  // TODO Demandes
   // ------------------------------ Operators ------------------------------- //
 
   public void single_move(Estacion origin, Estacion destination, Integer taken) {
     Integer disponible = origin.getNumBicicletasNoUsadas();
     origin.setNumBicicletasNoUsadas(disponible-taken);
 
-    Integer demand = destination.getDemanda();
-    destination.setDemanda(demand-taken);
+    // Integer demand = destination.getDemanda();
+   // destination.setDemanda(demand-taken);
 
     calculateCost(origin, destination, taken);
   }
@@ -129,7 +134,7 @@ public class State {
     Integer disponible = origin.getNumBicicletasNoUsadas();
     origin.setNumBicicletasNoUsadas(disponible-taken);
     Integer demand = first_destination.getDemanda();
-    first_destination.setDemanda(0);
+    // first_destination.setDemanda(0);
 
     // Update Van
     taken -= demand;
@@ -144,8 +149,7 @@ public class State {
     int kilometer_cost = (taken + 9)/10;
     double distance = Math.abs(origin.getCoordX() - destination.getCoordX() + Math.abs(origin.getCoordY() - destination.getCoordY()));
     double cost = distance * kilometer_cost;
-    this.gains += cost;
-    this.losses -= cost;
+    totalCost += cost;
   }
 
 }
