@@ -21,7 +21,7 @@ public class StateSuccessor implements SuccessorFunction {
 
         for (int i = 0; i < fleet.size(); i++) {
             Van actV = fleet.get(i);
-            int nOrigin = actV.getIdOrigin();
+            int nOrigin = actV.getOriginStationID();
             Estacion origin = stations.get(nOrigin);
             // TODO Actualitzar VAN
             if (!board.isVisited(nOrigin)) { // Si ja s'ha recollit a l'estació no podem fer res

@@ -24,7 +24,7 @@ public class SuccessorRandom implements SuccessorFunction {
 
         int randomVan  = ThreadLocalRandom.current().nextInt(0, nVans + 1);
         Van actV = fleet.get(randomVan);
-        int nOrigin = actV.getIdOrigin();
+        int nOrigin = actV.getOriginStationID();
         Estacion origin = stations.get(nOrigin);
 
         int randomOp  = ThreadLocalRandom.current().nextInt(0, 2);

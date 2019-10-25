@@ -3,9 +3,7 @@ package domain;
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Random;
 
 import static java.util.Collections.max;
@@ -60,7 +58,7 @@ public class State {
     Random rand = new Random(seed);
     for (Van v: this.fleet) {
       int est = rand.nextInt(this.stations.size()-1);
-      v.setOriginStation(est);
+      v.setOriginStationID(est);
     }
   }
 
@@ -117,7 +115,7 @@ public class State {
     for (Van v: this.fleet) {
       if (maxDemand.size() == 0)
         break;
-      v.setOriginStation(maxDemand.get(0));
+      v.setOriginStationID(maxDemand.get(0));
       maxDemand.remove(0);
     }
   }
