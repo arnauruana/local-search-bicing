@@ -3,8 +3,12 @@ package domain;
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Random;
+
+import static java.util.Collections.max;
 
 public class State {
 
@@ -57,6 +61,63 @@ public class State {
     for (Van v: this.fleet) {
       int est = rand.nextInt(this.stations.size()-1);
       v.setOriginStation(est);
+    }
+  }
+
+  private int maxIndex(ArrayList<Integer> arrayList) {
+    int max = arrayList.get(0);
+    int maxIndex = 0;
+    for(int i = 1; i < arrayList.size(); i++){
+      if( arrayList.get(i) > max ){
+        max = arrayList.get(i);
+        maxIndex = i;
+      }
+    }
+    return maxIndex;
+  }
+
+
+    private ArrayList<Integer> initDemand(int size) {
+    ArrayList<Integer> demand = new ArrayList<>(size);
+    for (Estacion e : this.stations) {
+      demand.add(e.getDemanda());
+    }
+    return demand;
+  }
+
+  private ArrayList<Integer> initIdStations(int size) {
+    ArrayList<Integer> idStation = new ArrayList<>(this.stations.size());
+    for (int i = 0; i < size; i++) {
+      idStation.add(i);
+    }
+    return idStation;
+  }
+
+  private ArrayList<Integer> getMaxDemand(ArrayList<Integer> d, ArrayList<Integer> id, int n) {
+    ArrayList<Integer> maxDemand = new ArrayList<>();
+    int k = 0;
+    while (k < n) {
+      int i = maxIndex(d);
+      if (d.get(i) <= 0)
+        break;
+      maxDemand.add(i);
+      d.remove(i);
+      id.remove(i);
+      k++;
+    }
+    return maxDemand;
+  }
+
+  public void initFixed1() {
+    int nvan = this.fleet.size();
+    ArrayList<Integer> idStations = initIdStations(this.stations.size());
+    ArrayList<Integer> demand = initDemand(this.stations.size());
+    ArrayList<Integer> maxDemand = getMaxDemand(demand, idStations, nvan);
+    for (Van v: this.fleet) {
+      if (maxDemand.size() == 0)
+        break;
+      v.setOriginStation(maxDemand.get(0));
+      maxDemand.remove(0);
     }
   }
 

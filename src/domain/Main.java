@@ -41,10 +41,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Initialize initialState, Random or Fixed
         State initialState = initState(args);
-        /*(args[1].equals("r"))
-            ? initialState.initRandom(Integer.parseInt(args[5]))
-            : initialState.initFixed(Integer.parseInt(args[5]));*/
-        initialState.initRandom(Integer.parseInt(args[5]));
+        if ((args[1].equals("r"))) {
+            initialState.initRandom(Integer.parseInt(args[5]));
+        } else {
+            initialState.initFixed1();
+        }
         // Only for Simulated Annealing Search
         int maxIt  = Integer.parseInt(args[7]);
         int numIt  = Integer.parseInt(args[8]);

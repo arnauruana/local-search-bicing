@@ -1,5 +1,6 @@
 package domain;
 
+import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import IA.Bicing.Estaciones;
 public class SuccessorRandom implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
-        ArrayList<State> retval = new ArrayList<>();
+        ArrayList retval = new ArrayList();
         State board = (State) state;
 
 
@@ -43,7 +44,8 @@ public class SuccessorRandom implements SuccessorFunction {
 
             State newBoard = new State(board);
             newBoard.single_move(origin, destination, randomBikes);
-            retval.add(newBoard);
+            String S = "RandomSingle";
+            retval.add(new Successor(S, newBoard));
 
         }
         else {
@@ -61,7 +63,8 @@ public class SuccessorRandom implements SuccessorFunction {
 
             State newBoard = new State(board);
             newBoard.double_move(origin, first_destination, second_destination, randomBikes);
-            retval.add(newBoard);
+            String S = "RandomDouble";
+            retval.add(new Successor(S, newBoard));
         }
         return retval;
     }
