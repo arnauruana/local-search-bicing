@@ -19,6 +19,7 @@ public class State {
     private ArrayList<Van> fleet;
 
     private Integer cost;
+    private Integer benefits;
 
     // =============================== METHODS ================================ //
 
@@ -30,6 +31,7 @@ public class State {
         initIsVisited(nest);
         initFleet(nvan);
         this.cost = 0;
+        this.benefits = 0;
     }
 
     // Copy constructor
@@ -38,6 +40,7 @@ public class State {
         this.setIsVisited(state.getIsVisited());
         this.setFleet(state.getFleet());
         this.setCost(state.getCost());
+        this.setBenefits(state.getBenefits());
     }
 
     // ----------------------------- Initializers ----------------------------- //
@@ -129,10 +132,6 @@ public class State {
         }
     }
 
-    public void setCost(final int cost) {
-        this.cost = cost;
-    }
-
     public void setVanVisited(final int van) {
         this.isVisited.set(van, true);
     }
@@ -142,6 +141,14 @@ public class State {
         for (int i = 0; i < fleet.size(); ++i) {
             this.fleet.set(i, fleet.get(i));
         }
+    }
+
+    public void setCost(final int cost) {
+        this.cost = cost;
+    }
+
+    public void setBenefits(final int benefits) {
+        this.benefits = benefits;
     }
 
     // ----------------------------- Consultants ------------------------------ //
@@ -164,6 +171,10 @@ public class State {
 
     public int getCost() {
         return this.cost;
+    }
+
+    public int getBenefits() {
+        return this.benefits;
     }
 
     // ------------------------------ Operators ------------------------------- //
@@ -241,21 +252,25 @@ public class State {
         out.println(this.cost);
     }
 
+    private void printBenefits() {
+        out.println(this.benefits);
+    }
+
     public void print() {
+        out.println();
         out.println("[State] INFO: printing attributes...");
         out.print("  ⤷ stations(" + this.stations.size() + "):\t"); this.printStations();
         out.print("  ⤷ visited(" + this.isVisited.size() + "): \t"); this.printVisited();
         out.print("  ⤷ fleet(" + this.fleet.size() + "):\t\t"); this.printFleet();
         out.print("  ⤷ cost:\t\t\t"); this.printCost();
+        out.print("  ⤷ benefits:\t\t"); this.printBenefits();
     }
 
     // ------------------------------------------------------------------------ //
 
     public static void main(String[] args) {
-
         State s = new State(5, 100, 0, 1, 10);
         s.print();
-
     }
 
 }
