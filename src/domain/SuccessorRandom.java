@@ -10,6 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
+import static java.lang.Math.min;
+
 public class SuccessorRandom implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
@@ -37,13 +39,12 @@ public class SuccessorRandom implements SuccessorFunction {
         if (randomOp == 1) {
 
             Estacion destination = stations.get(randomDest);
-            int demand = destination.getDemanda();
-            if (demand > 30) demand = 30;
 
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, demand + 1);
+            int numBikes = calculateNumBikes(origin, destination);
+            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
 
             State newBoard = new State(board);
-            newBoard.single_move(origin, destination, randomBikes);
+            newBoard.singleMove(origin, destination, randomBikes);
             String S = "RandomSingle";
             retval.add(new Successor(S, newBoard));
 
@@ -53,20 +54,45 @@ public class SuccessorRandom implements SuccessorFunction {
             int randomSecondDest  = ThreadLocalRandom.current().nextInt(0, nStations + 1);
             while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
 
-            Estacion first_destination = stations.get(randomDest);
-            Estacion second_destination = stations.get(randomSecondDest);
+            Estacion firstDestination = stations.get(randomDest);
+            Estacion secondDestination = stations.get(randomSecondDest);
 
-            int demand = first_destination.getDemanda() + second_destination.getDemanda();
-            if (demand > 30) demand = 30;
-
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, demand + 1);
+            int numBikes = calculateNumBikesDouble(origin, firstDestination, secondDestination);
+            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
 
             State newBoard = new State(board);
-            newBoard.double_move(origin, first_destination, second_destination, randomBikes);
+            newBoard.doubleMove(origin, firstDestination, secondDestination, randomBikes);
             String S = "RandomDouble";
             retval.add(new Successor(S, newBoard));
         }
         return retval;
+    }
+
+    private int calculateNumBikes(Estacion act, Estacion dest) {
+        int numBikes = 0;
+        int excess = act.getNumBicicletasNext() - dest.getDemanda();
+        if (excess > 0) {
+            numBikes = min(excess, act.getNumBicicletasNoUsadas());
+            int deficit = dest.getDemanda() - dest.getNumBicicletasNext();
+            numBikes = min(numBikes, deficit);
+            numBikes = min (numBikes, Van.CAPACITY);
+        }
+        return numBikes;
+    }
+
+    private int calculateNumBikesDouble(Estacion act, Estacion dest1, Estacion dest2) {
+        int numBikes = 0;
+        int excess = act.getNumBicicletasNext() - dest1.getDemanda();
+        if (excess > 0) {
+            numBikes = min (excess, act.getNumBicicletasNoUsadas());
+            int deficit1 = dest1.getDemanda() - dest1.getNumBicicletasNext();
+            int deficit2 = dest2.getDemanda() - dest2.getNumBicicletasNext();
+            if (deficit1 > 0 && deficit2 > 0) {
+                numBikes = min(numBikes, deficit1+deficit2);
+                numBikes = min(numBikes, Van.CAPACITY);
+            }
+        }
+        return numBikes;
     }
 
 }

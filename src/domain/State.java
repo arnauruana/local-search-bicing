@@ -74,12 +74,12 @@ public class State {
   }
 
 
-    private ArrayList<Integer> initDemand(int size) {
-    ArrayList<Integer> demand = new ArrayList<>(size);
+  private ArrayList<Integer> initExcess(int size) {
+    ArrayList<Integer> excess = new ArrayList<>(size);
     for (Estacion e : this.stations) {
-      demand.add(e.getDemanda());
+      excess.add(e.getNumBicicletasNext() - e.getDemanda());
     }
-    return demand;
+    return excess;
   }
 
   private ArrayList<Integer> initIdStations(int size) {
@@ -108,14 +108,13 @@ public class State {
   public void initFixed1() {
     int nvan = this.fleet.size();
     ArrayList<Integer> idStations = initIdStations(this.stations.size());
-    // TODO we shouldn't use the demand
-    ArrayList<Integer> demand = initDemand(this.stations.size());
-    ArrayList<Integer> maxDemand = getMaxDemand(demand, idStations, nvan);
+    ArrayList<Integer> excess = initExcess(this.stations.size());
+    ArrayList<Integer> maxExcess = getMaxDemand(excess, idStations, nvan);
     for (Van v: this.fleet) {
-      if (maxDemand.size() == 0)
+      if (maxExcess.size() == 0)
         break;
-      v.setOriginStationID(maxDemand.get(0));
-      maxDemand.remove(0);
+      v.setOriginStationID(maxExcess.get(0));
+      maxExcess.remove(0);
     }
   }
 
@@ -177,7 +176,7 @@ public class State {
   // TODO Demandes
   // ------------------------------ Operators ------------------------------- //
 
-  public void single_move(Estacion origin, Estacion destination, Integer taken) {
+  public void singleMove(Estacion origin, Estacion destination, Integer taken) {
 
     Integer nonUsed = origin.getNumBicicletasNoUsadas();
     origin.setNumBicicletasNoUsadas(nonUsed-taken);
@@ -191,7 +190,7 @@ public class State {
     calculateCost(origin, destination, taken);
   }
 
-  public void double_move(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
+  public void doubleMove(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
 
     // First move
     Integer excedent = origin.getNumBicicletasNoUsadas();
