@@ -14,6 +14,7 @@ public class State {
     // ============================== ATTRIBUTES ============================== //
 
     private Estaciones stations;
+    private static int nest, nbic, dem, seed, nvan;
     private ArrayList<Boolean> isVisited;
 
     private ArrayList<Van> fleet;
@@ -27,7 +28,11 @@ public class State {
 
     // Initial constructor
     public State(int nest, int nbic, int dem, int seed, int nvan) {
-        this.stations = new Estaciones(nest, nbic, dem, seed);
+        State.nest = nest;
+        State.nbic = nbic;
+        State.dem  = dem;
+        State.seed = nvan;
+        this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
         initIsVisited(nest);
         initFleet(nvan);
         this.cost = 0;
@@ -36,7 +41,7 @@ public class State {
 
     // Copy constructor
     public State(final State state) {
-        this.stations = (Estaciones) state.getStations().clone();
+        this.setStations(state.getStations());
         this.setIsVisited(state.getIsVisited());
         this.setFleet(state.getFleet());
         this.setCost(state.getCost());
@@ -124,6 +129,18 @@ public class State {
     }
 
     //  ------------------------------ Modifiers ------------------------------- //
+
+    private void setStations(Estaciones stations) {
+        this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
+        for (int i = 0; i < this.stations.size(); i++) {
+            Estacion eAux = stations.get(i);
+            Estacion e = new Estacion(eAux.getCoordX(), eAux.getCoordY());
+            e.setNumBicicletasNext(eAux.getNumBicicletasNext());
+            e.setNumBicicletasNoUsadas(eAux.getNumBicicletasNoUsadas());
+            e.setDemanda(eAux.getDemanda());
+            this.stations.set(i, e);
+        }
+    }
 
     private void setIsVisited(final ArrayList<Boolean> isVisited) {
         initIsVisited(isVisited.size());
