@@ -22,8 +22,6 @@ public class Van {
 
   // ----------------------------- Constructors ----------------------------- //
 
-  Van() {}
-
   Van(final Integer estationID) {
     this.stationID = estationID;
   }
@@ -32,11 +30,6 @@ public class Van {
 
   void setOriginStationID(final Integer stationID) {
     this.stationID = stationID;
-  }
-
-  void setNumBikes(final Integer numBikes) {
-    this.checkCapacity(numBikes);
-    this.numBikes = numBikes;
   }
 
   // ----------------------------- Consultants ------------------------------ //
