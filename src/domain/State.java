@@ -52,7 +52,7 @@ public class State {
     private void initFleet(final int nvan) {
         this.fleet = new ArrayList<>(nvan);
         for (int i = 0; i < nvan; i++) {
-            this.fleet.add(new Van(0));
+            this.fleet.add(new Van(i));
         }
     }
 
@@ -129,12 +129,8 @@ public class State {
         }
     }
 
-    void setCost(final int cost) {
+    public void setCost(final int cost) {
         this.cost = cost;
-    }
-
-    void incrCost(final int cost) {
-        this.cost += cost;
     }
 
     public void setVanVisited(final int van) {
@@ -154,10 +150,6 @@ public class State {
         return this.stations;
     }
 
-    public Estacion getStation(final int i) {
-        return this.stations.get(i);
-    }
-
     public ArrayList<Boolean> getIsVisited() {
         return this.isVisited;
     }
@@ -170,20 +162,13 @@ public class State {
         return this.fleet;
     }
 
-    public Van getVan(final int i) {
-        return this.fleet.get(i);
-    }
-
-    int getCost() {
+    public int getCost() {
         return this.cost;
     }
 
-    // TODO Demandes
-
     // ------------------------------ Operators ------------------------------- //
 
-  public void singleMove(Estacion origin, Estacion destination, Integer taken) {
-
+    public void singleMove(Estacion origin, Estacion destination, Integer taken) {
         Integer nonUsed = origin.getNumBicicletasNoUsadas();
         origin.setNumBicicletasNoUsadas(nonUsed-taken);
 
@@ -196,8 +181,7 @@ public class State {
         calculateCost(origin, destination, taken);
     }
 
-  public void doubleMove(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
-
+    public void doubleMove(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
         // First move
         Integer excedent = origin.getNumBicicletasNoUsadas();
         origin.setNumBicicletasNoUsadas(excedent-taken);
@@ -226,7 +210,7 @@ public class State {
     private void printStations() {
         out.print(this.stations.get(0));
         for (int i = 1; i < this.stations.size(); ++i) {
-            out.print(", " + this.stations.get(i));
+            out.print(" | " + this.stations.get(i));
         }
         out.println();
     }
@@ -234,31 +218,36 @@ public class State {
     private void printVisited() {
         out.print(this.isVisited.get(0));
         for (int i = 1; i < this.isVisited.size(); ++i) {
-            out.print(", " + this.isVisited.get(i));
+            out.print(" | " + this.isVisited.get(i));
         }
         out.println();
     }
 
     private void printFleet() {
-        for (int i = 0; i < this.fleet.size(); ++i) {
-            //out.print(", " + this.fleet.get(i));
-            this.fleet.get(i).print();
+        out.print("(" + this.fleet.get(0).getOriginStationID() + "," + this.fleet.get(0).getNumBikes() + ")");
+        for (int i = 1; i < this.fleet.size(); ++i) {
+            out.print(" | (" + this.fleet.get(i).getOriginStationID() + "," + this.fleet.get(i).getNumBikes() + ")");
         }
+        out.println();
     }
 
-    void print() {
+    private void printCost() {
+        out.println(this.cost);
+    }
+
+    public void print() {
         out.println("[State] INFO: printing attributes...");
         out.print("  ⤷ stations(" + this.stations.size() + "):\t"); this.printStations();
         out.print("  ⤷ visited(" + this.isVisited.size() + "): \t"); this.printVisited();
-        out.println("  ⤷ fleet(" + this.fleet.size() + "):\t\t"); this.printFleet();
-        //out.print("  ⤷ cost:\t"); this.printCost();
+        out.print("  ⤷ fleet(" + this.fleet.size() + "):\t\t"); this.printFleet();
+        out.print("  ⤷ cost:\t\t\t"); this.printCost();
     }
 
     // ------------------------------------------------------------------------ //
 
     public static void main(String[] args) {
 
-        State s = new State(5, 100, 0, 1, 2);
+        State s = new State(5, 100, 0, 1, 10);
         s.print();
 
     }
