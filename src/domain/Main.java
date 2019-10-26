@@ -58,9 +58,12 @@ public class Main {
         State initialState = initState(args);
         if ((args[1].equals("r"))) {
             initialState.initRandom(Integer.parseInt(args[5]));
+        } else if ((args[1].equals("f"))) {
+            initialState.initFixed();
         } else {
-            initialState.initFixed1();
+            initialState.initRandomFixed(Integer.parseInt(args[5]));
         }
+
         // Only for Simulated Annealing Search
         int maxIt  = Integer.parseInt(args[7]);
         int numIt  = Integer.parseInt(args[8]);
