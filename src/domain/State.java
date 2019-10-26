@@ -283,11 +283,4 @@ public class State {
         out.print("  ⤷ benefits:\t\t"); this.printBenefits();
     }
 
-    // ------------------------------------------------------------------------ //
-
-    public static void main(String[] args) {
-        State s = new State(5, 100, 0, 1, 10);
-        s.print();
-    }
-
 }
