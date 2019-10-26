@@ -39,6 +39,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+
+        long startTime = System.nanoTime();
         // Initialize initialState, Random or Fixed
         State initialState = initState(args);
         if ((args[1].equals("r"))) {
@@ -71,5 +73,10 @@ public class Main {
 
         printInstrumentation(agent.getInstrumentation());
         printActions(agent.getActions());
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime)/1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println(duration);
+
     }
 }

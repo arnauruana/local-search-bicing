@@ -79,7 +79,7 @@ public class StateSuccessor implements SuccessorFunction {
             int deficit1 = dest1.getDemanda() - dest1.getNumBicicletasNext();
             int deficit2 = dest2.getDemanda() - dest2.getNumBicicletasNext();
             if (deficit1 > 0 && deficit2 > 0) {
-                numBikes = min(numBikes, deficit1+deficit2);
+                numBikes = min(numBikes, deficit1 + deficit2);
                 numBikes = min(numBikes, Van.CAPACITY);
             }
             else numBikes = 0;
