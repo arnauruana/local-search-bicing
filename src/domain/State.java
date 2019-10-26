@@ -6,7 +6,6 @@ import IA.Bicing.Estaciones;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static java.util.Collections.max;
 
 public class State {
 
