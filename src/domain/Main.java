@@ -10,6 +10,10 @@ import aima.search.informed.SimulatedAnnealingSearch;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.System.out;
+
 
 public class Main {
 
@@ -38,9 +42,17 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    private static void printElapsedTime(final long start, final long end) {
+        long elapsedTime = end - start; // in nanseconds
+        out.println();
+        out.print("Elapsed time (ms):\t"); out.println(TimeUnit.NANOSECONDS.toMillis(elapsedTime));
+        out.print("Elapsed time (s): \t"); out.println(TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
+        out.print("Elapsed time (m): \t"); out.println(TimeUnit.NANOSECONDS.toMinutes(elapsedTime));
+        out.print("Elapsed time (h): \t"); out.println(TimeUnit.NANOSECONDS.toHours(elapsedTime));
+        out.println();
+    }
 
-        long startTime = System.nanoTime();
+    public static void main(String[] args) throws Exception {
         // Initialize initialState, Random or Fixed
         State initialState = initState(args);
         if ((args[1].equals("r"))) {
@@ -69,14 +81,12 @@ public class Main {
         // Initialize Problem. (AIMA)
         Problem problem = new Problem(initialState, successor, new StateGoal(), new Heuristic1());
 
+        long startTime = System.nanoTime();
         SearchAgent agent = new SearchAgent(problem, search);
-
-        printInstrumentation(agent.getInstrumentation());
-        printActions(agent.getActions());
-
         long endTime = System.nanoTime();
-        long duration = (endTime - startTime)/1000000;  //divide by 1000000 to get milliseconds
-        System.out.println(duration);
 
+        Main.printInstrumentation(agent.getInstrumentation());
+        Main.printActions(agent.getActions());
+        Main.printElapsedTime(startTime, endTime);
     }
 }
