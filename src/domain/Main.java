@@ -75,7 +75,7 @@ public class Main {
         printActions(agent.getActions());
 
         long endTime = System.nanoTime();
-        long duration = (endTime - startTime)/1000000;  //divide by 1000000 to get milliseconds.
+        long duration = (endTime - startTime)/1000000;  //divide by 1000000 to get milliseconds
         System.out.println(duration);
 
     }
