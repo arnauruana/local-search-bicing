@@ -182,19 +182,25 @@ public class State {
     }
 
     public void doubleMove(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
-        // First move
-        Integer excedent = origin.getNumBicicletasNoUsadas();
-        origin.setNumBicicletasNoUsadas(excedent-taken);
+        // Update origin
+        Integer nonUsed = origin.getNumBicicletasNoUsadas();
+        origin.setNumBicicletasNoUsadas(nonUsed-taken);
+        Integer nextO = origin.getNumBicicletasNext();
+        origin.setNumBicicletasNext(nextO-taken);
 
-        Integer demand = first_destination.getDemanda();
-        // first_destination.setDemanda(0);
+        // Update dest1
+        Integer nextD1 = first_destination.getNumBicicletasNext();
+        Integer demand1 = first_destination.getDemanda() - nextD1;
+        first_destination.setNumBicicletasNext(nextD1 - demand1);
 
         // Update Van
-        taken -= demand;
+        taken -= demand1;
 
-        // Second move
-        second_destination.setDemanda(second_destination.getDemanda()- taken);
-        calculateCost(origin, first_destination, taken+demand);
+        // Update dest2
+        Integer nextD2 = second_destination.getNumBicicletasNext();
+        second_destination.setNumBicicletasNext(nextD2 - taken);
+
+        calculateCost(origin, first_destination, taken+demand1);
         calculateCost(first_destination, second_destination, taken);
     }
 
