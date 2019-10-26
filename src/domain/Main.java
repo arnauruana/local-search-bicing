@@ -27,15 +27,17 @@ public class Main {
     }
 
     private static void printInstrumentation(Properties properties) {
+        out.println();
         Iterator keys = properties.keySet().iterator();
         while (keys.hasNext()) {
             String key = (String) keys.next();
             String property = properties.getProperty(key);
-            System.out.println(key + " : " + property);
+            System.out.println(key + ": " + property);
         }
     }
 
     private static void printActions(List actions) {
+        out.println();
         for (Object action1 : actions) {
             String action = action1.toString();
             System.out.println(action);
@@ -49,7 +51,6 @@ public class Main {
         out.print("Elapsed time (s): \t"); out.println(TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
         out.print("Elapsed time (m): \t"); out.println(TimeUnit.NANOSECONDS.toMinutes(elapsedTime));
         out.print("Elapsed time (h): \t"); out.println(TimeUnit.NANOSECONDS.toHours(elapsedTime));
-        out.println();
     }
 
     public static void main(String[] args) throws Exception {
@@ -89,4 +90,5 @@ public class Main {
         Main.printActions(agent.getActions());
         Main.printElapsedTime(startTime, endTime);
     }
+
 }
