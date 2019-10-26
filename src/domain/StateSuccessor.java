@@ -68,27 +68,28 @@ public class StateSuccessor implements SuccessorFunction {
 
     private int calculateNumBikes(Estacion act, Estacion dest) {
         int numBikes = 0;
-        int excess = act.getNumBicicletasNext() - dest.getDemanda();
+        int excess = act.getNumBicicletasNext() - act.getDemanda();
         if (excess > 0) {
             numBikes = min(excess, act.getNumBicicletasNoUsadas());
             int deficit = dest.getDemanda() - dest.getNumBicicletasNext();
             numBikes = min(numBikes, deficit);
-            numBikes = min (numBikes, Van.CAPACITY);
+            numBikes = min(numBikes, Van.CAPACITY);
         }
         return numBikes;
     }
 
     private int calculateNumBikesDouble(Estacion act, Estacion dest1, Estacion dest2) {
         int numBikes = 0;
-        int excess = act.getNumBicicletasNext() - dest1.getDemanda();
+        int excess = act.getNumBicicletasNext() - act.getDemanda();
         if (excess > 0) {
-            numBikes = min (excess, act.getNumBicicletasNoUsadas());
+            numBikes = min(excess, act.getNumBicicletasNoUsadas());
             int deficit1 = dest1.getDemanda() - dest1.getNumBicicletasNext();
             int deficit2 = dest2.getDemanda() - dest2.getNumBicicletasNext();
             if (deficit1 > 0 && deficit2 > 0) {
                 numBikes = min(numBikes, deficit1+deficit2);
                 numBikes = min(numBikes, Van.CAPACITY);
             }
+            else numBikes = 0;
         }
         return numBikes;
     }
