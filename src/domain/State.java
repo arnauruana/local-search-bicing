@@ -14,7 +14,7 @@ public class State {
     // ============================== ATTRIBUTES ============================== //
 
     private Estaciones stations;
-    private static int nest, nbic, dem, seed, nvan;
+    private static int nest, nbic, dem, seed;
     private ArrayList<Boolean> isVisited;
 
     private ArrayList<Van> fleet;
@@ -31,7 +31,7 @@ public class State {
         State.nest = nest;
         State.nbic = nbic;
         State.dem  = dem;
-        State.seed = nvan;
+        State.seed = seed;
         this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
         initIsVisited(nest);
         initFleet(nvan);
@@ -134,7 +134,7 @@ public class State {
         this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
         for (int i = 0; i < this.stations.size(); i++) {
             Estacion eAux = stations.get(i);
-            Estacion e = new Estacion(eAux.getCoordX(), eAux.getCoordY());
+            Estacion e = new Estacion(eAux.getCoordX()/100, eAux.getCoordY()/100);
             e.setNumBicicletasNext(eAux.getNumBicicletasNext());
             e.setNumBicicletasNoUsadas(eAux.getNumBicicletasNoUsadas());
             e.setDemanda(eAux.getDemanda());

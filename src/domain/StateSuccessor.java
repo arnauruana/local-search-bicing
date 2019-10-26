@@ -34,7 +34,7 @@ public class StateSuccessor implements SuccessorFunction {
                         for (Integer k = 1; k <= numBikes ; ++k) {
                             State newBoard = new State(board);
                             newBoard.singleMove(origin, destination, k);
-                            newBoard.setVanVisited(i);
+                            newBoard.setVanVisited(nOrigin);
                             String S = "Single" + k;
                             retval.add(new Successor(S, newBoard));
                         }
