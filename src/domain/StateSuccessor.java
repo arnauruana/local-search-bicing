@@ -24,17 +24,15 @@ public class StateSuccessor implements SuccessorFunction {
         for (int i = 0; i < fleet.size(); i++) {
             Van actV = fleet.get(i);
             int nOrigin = actV.getOriginStationID();
-            Estacion origin = stations.get(nOrigin);
             if (!board.isVisited(nOrigin)) { // Si ja s'ha recollit a l'estació no podem fer res
                 // generateSingle
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
-                        Estacion destination = stations.get(j);
-                        int numBikes = calculateNumBikes(origin, destination);
+                        int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(j));
                         for (Integer k = 1; k <= numBikes ; ++k) {
                             State newBoard = new State(board);
-                            newBoard.singleMove(origin, destination, k);
-                            newBoard.setVanVisited(nOrigin);
+                            newBoard.singleMove(nOrigin, j, k);
+                            newBoard.setStationVisited(nOrigin);
                             String S = "Single" + k;
                             retval.add(new Successor(S, newBoard));
                         }
@@ -43,17 +41,12 @@ public class StateSuccessor implements SuccessorFunction {
                 // generateDouble
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
-                        Estacion firstDestination = stations.get(j);
-
                         for (Integer s = 0; s < nStations; ++s) {
-                            if (!s.equals(j)) {
-                                Estacion secondDestination = stations.get(s);
-
-                                int numBikes =  calculateNumBikesDouble(origin, firstDestination, secondDestination);
+                            if (!s.equals(j)) {int numBikes =  calculateNumBikesDouble(stations.get(nOrigin), stations.get(j), stations.get(s));
                                 for (Integer k = 1; k <= numBikes; ++k) {
                                     State newBoard = new State(board);
-                                    newBoard.doubleMove(origin, firstDestination, secondDestination, k);
-                                    newBoard.setVanVisited(i);
+                                    newBoard.doubleMove(nOrigin, j, s, k);
+                                    newBoard.setStationVisited(i);
                                     String S = "Double" + k;
                                     retval.add(new Successor(S, newBoard));
                                 }

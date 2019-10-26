@@ -149,8 +149,8 @@ public class State {
         }
     }
 
-    public void setVanVisited(final int van) {
-        this.isVisited.set(van, true);
+    public void setStationVisited(final int station) {
+        this.isVisited.set(station, true);
     }
 
     private void setFleet(final ArrayList<Van> fleet) {
@@ -196,40 +196,40 @@ public class State {
 
     // ------------------------------ Operators ------------------------------- //
 
-    public void singleMove(Estacion origin, Estacion destination, Integer taken) {
-        Integer nonUsed = origin.getNumBicicletasNoUsadas();
-        origin.setNumBicicletasNoUsadas(nonUsed-taken);
+    public void singleMove(Integer origin, Integer destination, Integer taken) {
+        Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
+        this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed-taken);
 
-        Integer nextO = origin.getNumBicicletasNext();
-        origin.setNumBicicletasNext(nextO-taken);
+        Integer nextO = this.stations.get(origin).getNumBicicletasNext();
+        this.stations.get(origin).setNumBicicletasNext(nextO-taken);
 
-        Integer nextD = destination.getNumBicicletasNext();
-        destination.setNumBicicletasNext(nextD+taken);
+        Integer nextD = this.stations.get(destination).getNumBicicletasNext();
+        this.stations.get(destination).setNumBicicletasNext(nextD+taken);
 
-        calculateCost(origin, destination, taken);
+        calculateCost(this.stations.get(origin), this.stations.get(destination), taken);
     }
 
-    public void doubleMove(Estacion origin, Estacion first_destination, Estacion second_destination, Integer taken) {
+    public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
         // Update origin
-        Integer nonUsed = origin.getNumBicicletasNoUsadas();
-        origin.setNumBicicletasNoUsadas(nonUsed-taken);
-        Integer nextO = origin.getNumBicicletasNext();
-        origin.setNumBicicletasNext(nextO-taken);
+        Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
+        this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed-taken);
+        Integer nextO = this.stations.get(origin).getNumBicicletasNext();
+        this.stations.get(origin).setNumBicicletasNext(nextO-taken);
 
         // Update dest1
-        Integer nextD1 = first_destination.getNumBicicletasNext();
-        Integer demand1 = first_destination.getDemanda() - nextD1;
-        first_destination.setNumBicicletasNext(nextD1 - demand1);
+        Integer nextD1 = this.stations.get(firstDestination).getNumBicicletasNext();
+        Integer demand1 = this.stations.get(firstDestination).getDemanda() - nextD1;
+        this.stations.get(firstDestination).setNumBicicletasNext(nextD1 - demand1);
 
         // Update Van
         taken -= demand1;
 
         // Update dest2
-        Integer nextD2 = second_destination.getNumBicicletasNext();
-        second_destination.setNumBicicletasNext(nextD2 - taken);
+        Integer nextD2 = this.stations.get(secondDestination).getNumBicicletasNext();
+        this.stations.get(secondDestination).setNumBicicletasNext(nextD2 - taken);
 
-        calculateCost(origin, first_destination, taken+demand1);
-        calculateCost(first_destination, second_destination, taken);
+        calculateCost(this.stations.get(origin), this.stations.get(firstDestination), taken+demand1);
+        calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), taken);
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {

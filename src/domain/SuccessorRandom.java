@@ -27,7 +27,6 @@ public class SuccessorRandom implements SuccessorFunction {
         int randomVan  = ThreadLocalRandom.current().nextInt(0, nVans + 1);
         Van actV = fleet.get(randomVan);
         int nOrigin = actV.getOriginStationID();
-        Estacion origin = stations.get(nOrigin);
 
         int randomOp  = ThreadLocalRandom.current().nextInt(0, 2);
 
@@ -37,14 +36,11 @@ public class SuccessorRandom implements SuccessorFunction {
 
 
         if (randomOp == 1) {
-
-            Estacion destination = stations.get(randomDest);
-
-            int numBikes = calculateNumBikes(origin, destination);
+            int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(randomDest));
             int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
 
             State newBoard = new State(board);
-            newBoard.singleMove(origin, destination, randomBikes);
+            newBoard.singleMove(nOrigin, randomDest, randomBikes);
             String S = "RandomSingle";
             retval.add(new Successor(S, newBoard));
 
@@ -54,14 +50,11 @@ public class SuccessorRandom implements SuccessorFunction {
             int randomSecondDest  = ThreadLocalRandom.current().nextInt(0, nStations + 1);
             while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
 
-            Estacion firstDestination = stations.get(randomDest);
-            Estacion secondDestination = stations.get(randomSecondDest);
-
-            int numBikes = calculateNumBikesDouble(origin, firstDestination, secondDestination);
+            int numBikes = calculateNumBikesDouble(stations.get(nOrigin), stations.get(randomDest), stations.get(randomSecondDest));
             int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
 
             State newBoard = new State(board);
-            newBoard.doubleMove(origin, firstDestination, secondDestination, randomBikes);
+            newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
             String S = "RandomDouble";
             retval.add(new Successor(S, newBoard));
         }
