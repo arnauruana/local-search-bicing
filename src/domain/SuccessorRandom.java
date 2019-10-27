@@ -43,7 +43,11 @@ public class SuccessorRandom implements SuccessorFunction {
 
             State newBoard = new State(board);
             newBoard.singleMove(nOrigin, randomDest, randomBikes);
-            String S = "RandomSingle: " + randomBikes + " Acc: " + -hf.getHeuristicValue(newBoard);;
+            String S = "Operator: single " + "\n" +
+                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                    "Origin: " + nOrigin + "\n" +
+                    "Destination: " + randomDest + "\n" +
+                    "Bikes moved: " + numBikes + "\n";
             retval.add(new Successor(S, newBoard));
         }
         else {
@@ -55,7 +59,14 @@ public class SuccessorRandom implements SuccessorFunction {
 
             State newBoard = new State(board);
             newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
-            String S = "RandomDouble: " + randomBikes + " Acc: " + -hf.getHeuristicValue(newBoard);;
+            String S = "Operator: double " + "\n"+
+                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                    "Origin: " + nOrigin + "\n" +
+                    "First destination: " + randomDest + "\n" +
+                    "Bikes moved: " + (stations.get(randomDest).getDemanda() -  stations.get(randomDest).getNumBicicletasNext())+ "\n" +
+                    "Second destination: " + randomSecondDest + "\n" +
+                    "Bikes moved: " + (stations.get(randomSecondDest).getDemanda() -  stations.get(randomSecondDest).getNumBicicletasNext()) + "\n" +
+                    "Total bikes moved: " + numBikes + "\n";
             retval.add(new Successor(S, newBoard));
         }
         return retval;

@@ -40,7 +40,11 @@ public class SuccessorSingle implements SuccessorFunction {
                             State newBoard = new State(board);
                             newBoard.singleMove(nOrigin, j, numBikes);
                             newBoard.setStationVisited(nOrigin);
-                            String S = "Single: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
+                            String S = "Operator: single " + "\n" +
+                                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                                    "Origin: " + nOrigin + "\n" +
+                                    "Destination: " + j + "\n" +
+                                    "Bikes moved: " + numBikes + "\n";
                             retval.add(new Successor(S, newBoard));
                         }
                     }

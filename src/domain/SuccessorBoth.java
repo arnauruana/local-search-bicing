@@ -40,7 +40,11 @@ public class SuccessorBoth implements SuccessorFunction {
                             State newBoard = new State(board);
                             newBoard.singleMove(nOrigin, j, numBikes);
                             newBoard.setStationVisited(nOrigin);
-                            String S = "Single: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
+                            String S = "Operator: single " + "\n" +
+                                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                                    "Origin: " + nOrigin + "\n" +
+                                    "Destination: " + j + "\n" +
+                                    "Bikes moved: " + numBikes + "\n";
                             retval.add(new Successor(S, newBoard));
                         }
                     }
@@ -55,7 +59,14 @@ public class SuccessorBoth implements SuccessorFunction {
                                     State newBoard = new State(board);
                                     newBoard.doubleMove(nOrigin, j, s, numBikes);
                                     newBoard.setStationVisited(nOrigin);
-                                    String S = "Double: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
+                                    String S = "Operator: double " + "\n" +
+                                            "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                                            "Origin: " + nOrigin + "\n" +
+                                            "First destination: " + j + "\n" +
+                                            "Bikes moved: " + (stations.get(j).getDemanda() -  stations.get(j).getNumBicicletasNext())+ "\n" +
+                                            "Second destination: " + s + "\n" +
+                                            "Bikes moved: " + (stations.get(s).getDemanda() -  stations.get(s).getNumBicicletasNext()) + "\n" +
+                                            "Total bikes moved: " + numBikes + "\n";
                                     retval.add(new Successor(S, newBoard));
                                 }
                             }
