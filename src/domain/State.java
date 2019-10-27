@@ -278,7 +278,6 @@ public class State {
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
-
         int kilometer_cost = (taken + 9)/10;
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
