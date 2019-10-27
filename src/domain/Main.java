@@ -48,9 +48,6 @@ public class Main {
         long elapsedTime = end - start; // in nanoseconds
         out.println();
         out.print("Elapsed time (ms):\t"); out.println(TimeUnit.NANOSECONDS.toMillis(elapsedTime));
-        out.print("Elapsed time (s): \t"); out.println(TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
-        out.print("Elapsed time (m): \t"); out.println(TimeUnit.NANOSECONDS.toMinutes(elapsedTime));
-        out.print("Elapsed time (h): \t"); out.println(TimeUnit.NANOSECONDS.toHours(elapsedTime));
     }
 
     public static void main(String[] args) throws Exception {
