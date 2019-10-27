@@ -252,6 +252,7 @@ public class State {
         this.stations.get(destination).setNumBicicletasNext(nextD+taken);
 
         calculateCost(this.stations.get(origin), this.stations.get(destination), taken);
+        this.demandSupplied += taken;
     }
 
     public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
@@ -275,6 +276,7 @@ public class State {
 
         calculateCost(this.stations.get(origin), this.stations.get(firstDestination), taken+demand1);
         calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), taken);
+        this.demandSupplied += taken;
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
@@ -282,7 +284,6 @@ public class State {
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
         this.cost += cost;
-        this.demandSupplied += taken;
     }
 
     // -------------------------------- Driver -------------------------------- //
