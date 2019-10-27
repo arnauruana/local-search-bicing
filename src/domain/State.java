@@ -234,6 +234,7 @@ public class State {
     public int getBenefits() {
         return this.benefits;
     }
+
     public int getDemandSupplied() {
         return this.demandSupplied;
     }
@@ -283,7 +284,7 @@ public class State {
         int cost = distance * kilometer_cost;
         this.cost += cost;
 
-        demandSupplied += taken;
+        this.demandSupplied += taken;
     }
 
     // -------------------------------- Driver -------------------------------- //

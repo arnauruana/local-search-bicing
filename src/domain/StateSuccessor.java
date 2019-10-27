@@ -29,8 +29,8 @@ public class StateSuccessor implements SuccessorFunction {
             Van actV = fleet.get(i);
             int nOrigin = actV.getOriginStationID();
             if (!board.isVisited(nOrigin)) { // Si ja s'ha recollit a l'estació no podem fer res
-                // generateSingle
 
+                // generateSingle
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(j));
@@ -47,7 +47,8 @@ public class StateSuccessor implements SuccessorFunction {
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         for (Integer s = 0; s < nStations; ++s) {
-                            if (!s.equals(j)) {int numBikes =  calculateNumBikesDouble(stations.get(nOrigin), stations.get(j), stations.get(s));
+                            if (!s.equals(j)) {
+                                int numBikes =  calculateNumBikesDouble(stations.get(nOrigin), stations.get(j), stations.get(s));
                                 for (Integer k = 1; k <= numBikes; ++k) {
                                     State newBoard = new State(board);
                                     newBoard.doubleMove(nOrigin, j, s, k);
