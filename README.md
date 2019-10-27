@@ -2,14 +2,16 @@
 Local Search AI practice.
 
 Input arguments:
-* args[0]: HillClimbing/SimultatedAnnealing (h/s)
-* args[1]: Random initial state(0, 1)
-* args[2]: Number of stations
-* args[3]: Number of bikes
-* args[4]: Type of demand (0, 1)
-* args[5]: Seed
-* args[6]: Num of vans
-* args[7]: maxIt
-* args[8]: numIt
-* args[9]: k
-* args[10]: lambda
+* args[0]: Local Search Algorithm (hc/sa)
+* args[1]: Initial state (r/f/rf)
+* args[2]: Heuristic (d/c/b)
+* args[3]: Set of operators (s/d/sd)
+* args[4]: Number of stations
+* args[5]: Number of bikes
+* args[6]: Type of demand (0, 1)
+* args[7]: Seed
+* args[8]: Num of vans
+* args[9]: maxIt
+* args[10]: numIt
+* args[11]: k
+* args[12]: lambda

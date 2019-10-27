@@ -1,12 +1,10 @@
 package domain;
 
-import aima.search.framework.Problem;
-import aima.search.framework.Search;
-import aima.search.framework.SearchAgent;
-import aima.search.framework.SuccessorFunction;
+import aima.search.framework.*;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
+import java.lang.management.ClassLoadingMXBean;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -18,11 +16,11 @@ import static java.lang.System.out;
 public class Main {
 
     private static State initState(String[] args) {
-        int nest = Integer.parseInt(args[2]);
-        int nbic = Integer.parseInt(args[3]);
-        int dem  = Integer.parseInt(args[4]);
-        int seed = Integer.parseInt(args[5]);
-        int nVans = Integer.parseInt(args[6]);
+        int nest = Integer.parseInt(args[4]);
+        int nbic = Integer.parseInt(args[5]);
+        int dem  = Integer.parseInt(args[6]);
+        int seed = Integer.parseInt(args[7]);
+        int nVans = Integer.parseInt(args[8]);
         return new State(nest, nbic, dem, seed, nVans);
     }
 
@@ -50,37 +48,85 @@ public class Main {
         out.print("Elapsed time (ms):\t"); out.println(TimeUnit.NANOSECONDS.toMillis(elapsedTime));
     }
 
+    private static void printErrorMessage(String s) {
+        out.println(s);
+        System.exit(1);
+    }
+
     public static void main(String[] args) throws Exception {
-        // Initialize initialState, Random or Fixed
-        State initialState = initState(args);
-        if ((args[1].equals("r"))) {
-            initialState.initRandom(Integer.parseInt(args[5]));
-        } else if ((args[1].equals("f"))) {
-            initialState.initFixed();
-        } else {
-            initialState.initRandomFixed(Integer.parseInt(args[5]));
-        }
 
-        // Only for Simulated Annealing Search
-        int maxIt  = Integer.parseInt(args[7]);
-        int numIt  = Integer.parseInt(args[8]);
-        int k      = Integer.parseInt(args[9]);
-        int lambda = Integer.parseInt(args[10]);
-
-        // Initialize Search. (AIMA) and initialize Successor
+        // Local Search Algorithm
         Search search;
-        SuccessorFunction successor;
-        if (args[0].equals("h")) {
-            search = new HillClimbingSearch();
-            successor = new StateSuccessor();
+        switch (args[0]) {
+            case "hc":
+                search = new HillClimbingSearch();
+                break;
+            case "sa":
+                int maxIt  = Integer.parseInt(args[9]);
+                int numIt  = Integer.parseInt(args[10]);
+                int k      = Integer.parseInt(args[11]);
+                int lambda = Integer.parseInt(args[12]);
+                search = new SimulatedAnnealingSearch(maxIt, numIt, k, lambda);
+                break;
+            default:
+                printErrorMessage("Introduce a valid Local Search Algorithm");
         }
-        else {
-            search = new SimulatedAnnealingSearch(maxIt, numIt, k, lambda);
-            successor = new SuccessorRandom();
+
+        // Initial State
+        State initialState = initState(args);
+        switch (args[1]) {
+            case "r":
+                initialState.initRandom(Integer.parseInt(args[7]));
+                break;
+            case "f":
+                initialState.initFixed();
+                break;
+            case "rf":
+                initialState.initRandomFixed(Integer.parseInt(args[7]));
+                break;
+            default:
+                printErrorMessage("Introduce a valid Initial State");
+        }
+
+        // Heuristic
+        HeuristicFunction heuristic;
+        switch (args[2]) {
+            case "d":
+                heuristic = new HeuristicMaxDemandSupplied();
+                break;
+            case "c":
+                heuristic = new HeuristicMinCost();
+                break;
+            case "b":
+                heuristic = new HeuristicMaxBenefits();
+                break;
+            default:
+                printErrorMessage("Introduce a valid Heuristic");
+        }
+
+        // Set of Operators
+        SuccessorFunction successor;
+        if (args[0].equals("sa") && !args[3].equals("r"))
+            printErrorMessage("Introduce a valid set of Operators");
+        switch (args[3]) {
+            case "s":
+                successor = new SuccessorSingle();
+                break;
+            case "d":
+                successor = new SuccessorDouble();
+                break;
+            case "sd":
+                successor = new StateSuccessor();
+                break;
+            case "r":
+                successor = new SuccessorRandom();
+                break;
+            default:
+                printErrorMessage("Introduce a valid set of Operators");
         }
 
         // Initialize Problem. (AIMA)
-        Problem problem = new Problem(initialState, successor, new StateGoal(), new HeuristicMaxDemandSupplied());
+        Problem problem = new Problem(initialState, successor, new StateGoal(), heuristic);
 
         long startTime = System.nanoTime();
         SearchAgent agent = new SearchAgent(problem, search);

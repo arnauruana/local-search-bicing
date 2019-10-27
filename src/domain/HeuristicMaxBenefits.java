@@ -6,6 +6,6 @@ public class HeuristicMaxBenefits implements HeuristicFunction {
 
     public double getHeuristicValue(Object obj) {
         State state = (State) obj;
-        return state.getBenefits();
+        return -state.getBenefits();
     }
 }

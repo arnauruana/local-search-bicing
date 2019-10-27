@@ -285,6 +285,7 @@ public class State {
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
         this.cost += cost;
+        this.benefits += this.demandSupplied + this.cost;
     }
 
     // -------------------------------- Driver -------------------------------- //
