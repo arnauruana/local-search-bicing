@@ -20,8 +20,8 @@ public class State {
 
     private ArrayList<Van> fleet;
 
-    private Integer cost;
-    private Integer benefits;
+    private double cost;
+    private double benefits;
     private Integer demandSupplied;
 
     // =============================== METHODS ================================ //
@@ -199,11 +199,11 @@ public class State {
         }
     }
 
-    public void setCost(final int cost) {
+    public void setCost(final double cost) {
         this.cost = cost;
     }
 
-    public void setBenefits(final int benefits) {
+    public void setBenefits(final double benefits) {
         this.benefits = benefits;
     }
 
@@ -229,11 +229,11 @@ public class State {
         return this.fleet;
     }
 
-    public int getCost() {
+    public double getCost() {
         return this.cost;
     }
 
-    public int getBenefits() {
+    public double getBenefits() {
         return this.benefits;
     }
 
@@ -254,7 +254,7 @@ public class State {
 
         calculateCost(this.stations.get(origin), this.stations.get(destination), taken);
         this.demandSupplied += taken;
-        this.benefits = this.demandSupplied - this.cost;
+        this.benefits = (this.demandSupplied - this.cost);
     }
 
     public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
@@ -279,14 +279,15 @@ public class State {
         calculateCost(this.stations.get(origin), this.stations.get(firstDestination), demand1);
         calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), demand2);
         this.demandSupplied += taken;
-        this.benefits = this.demandSupplied - this.cost;
+        this.benefits = (this.demandSupplied - this.cost);
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
         int kilometer_cost = (taken + 9)/10;
-        int distance = (Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY()))/1000;
-        int cost = distance * kilometer_cost;
+        double distance = (Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY()))*1.0/1000;
+        double cost = distance * kilometer_cost;
         this.cost += cost;
+
     }
 
     // -------------------------------- Driver -------------------------------- //
