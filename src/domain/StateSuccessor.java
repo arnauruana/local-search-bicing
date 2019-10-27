@@ -1,5 +1,6 @@
 package domain;
 
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 import java.util.ArrayList;
@@ -13,9 +14,12 @@ import static java.lang.Math.min;
 public class StateSuccessor implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
+
         ArrayList retval= new ArrayList();
         State board = (State) state;
 
+        // For print
+        HeuristicFunction hf = new HeuristicMaxDemandSupplied();
 
         ArrayList<Van> fleet = board.getFleet();
         Estaciones stations = board.getStations();
@@ -26,6 +30,7 @@ public class StateSuccessor implements SuccessorFunction {
             int nOrigin = actV.getOriginStationID();
             if (!board.isVisited(nOrigin)) { // Si ja s'ha recollit a l'estació no podem fer res
                 // generateSingle
+
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(j));
@@ -33,7 +38,7 @@ public class StateSuccessor implements SuccessorFunction {
                             State newBoard = new State(board);
                             newBoard.singleMove(nOrigin, j, k);
                             newBoard.setStationVisited(nOrigin);
-                            String S = "Single" + k;
+                            String S = "Single: " + k + " Incr: " + -hf.getHeuristicValue(newBoard);
                             retval.add(new Successor(S, newBoard));
                         }
                     }
@@ -47,7 +52,7 @@ public class StateSuccessor implements SuccessorFunction {
                                     State newBoard = new State(board);
                                     newBoard.doubleMove(nOrigin, j, s, k);
                                     newBoard.setStationVisited(i);
-                                    String S = "Double" + k;
+                                    String S = "Double: " + k + " Incr: " + -hf.getHeuristicValue(newBoard);
                                     retval.add(new Successor(S, newBoard));
                                 }
                             }

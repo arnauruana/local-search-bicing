@@ -21,6 +21,7 @@ public class State {
 
     private Integer cost;
     private Integer benefits;
+    private Integer demandSupplied;
 
     // =============================== METHODS ================================ //
 
@@ -37,6 +38,7 @@ public class State {
         initFleet(nvan);
         this.cost = 0;
         this.benefits = 0;
+        this.demandSupplied = 0;
     }
 
     // Copy constructor
@@ -46,6 +48,7 @@ public class State {
         this.setFleet(state.getFleet());
         this.setCost(state.getCost());
         this.setBenefits(state.getBenefits());
+        this.setDemandSupplied(state.getDemandSupplied());
     }
 
     // ----------------------------- Initializers ----------------------------- //
@@ -204,6 +207,9 @@ public class State {
         this.benefits = benefits;
     }
 
+    public void setDemandSupplied(final int demandSupplied) {
+        this.demandSupplied = demandSupplied;
+    }
     // ----------------------------- Consultants ------------------------------ //
 
     public Estaciones getStations() {
@@ -229,6 +235,10 @@ public class State {
     public int getBenefits() {
         return this.benefits;
     }
+    public int getDemandSupplied() {
+        return this.demandSupplied;
+    }
+
 
     // ------------------------------ Operators ------------------------------- //
 
@@ -273,6 +283,8 @@ public class State {
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
         this.cost += cost;
+
+        demandSupplied += taken;
     }
 
     // -------------------------------- Driver -------------------------------- //
@@ -309,6 +321,10 @@ public class State {
         out.println(this.benefits);
     }
 
+    private void printDemandSupplied() {
+        out.println(this.demandSupplied);
+    }
+
     public void print() {
         out.println();
         out.println("[State] INFO: printing attributes...");
@@ -317,6 +333,8 @@ public class State {
         out.print("  ⤷ fleet(" + this.fleet.size() + "):\t\t"); this.printFleet();
         out.print("  ⤷ cost:\t\t\t"); this.printCost();
         out.print("  ⤷ benefits:\t\t"); this.printBenefits();
+        out.print("  ⤷ benefits:\t\t"); this.printDemandSupplied();
+
     }
 
 }

@@ -45,7 +45,7 @@ public class Main {
     }
 
     private static void printElapsedTime(final long start, final long end) {
-        long elapsedTime = end - start; // in nanseconds
+        long elapsedTime = end - start; // in nanoseconds
         out.println();
         out.print("Elapsed time (ms):\t"); out.println(TimeUnit.NANOSECONDS.toMillis(elapsedTime));
         out.print("Elapsed time (s): \t"); out.println(TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
@@ -83,7 +83,7 @@ public class Main {
         }
 
         // Initialize Problem. (AIMA)
-        Problem problem = new Problem(initialState, successor, new StateGoal(), new Heuristic1());
+        Problem problem = new Problem(initialState, successor, new StateGoal(), new HeuristicMaxDemandSupplied());
 
         long startTime = System.nanoTime();
         SearchAgent agent = new SearchAgent(problem, search);
@@ -92,6 +92,7 @@ public class Main {
         Main.printInstrumentation(agent.getInstrumentation());
         Main.printActions(agent.getActions());
         Main.printElapsedTime(startTime, endTime);
+
     }
 
 }
