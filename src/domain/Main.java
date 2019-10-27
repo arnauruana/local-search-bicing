@@ -4,7 +4,6 @@ import aima.search.framework.*;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
-import java.lang.management.ClassLoadingMXBean;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -91,14 +90,11 @@ public class Main {
         // Heuristic
         HeuristicFunction heuristic;
         switch (args[2]) {
-            case "d":
-                heuristic = new HeuristicMaxDemandSupplied();
+            case "max":
+                heuristic = new HeuristicMaxObtained();
                 break;
-            case "c":
+            case "min":
                 heuristic = new HeuristicMinCost();
-                break;
-            case "b":
-                heuristic = new HeuristicMaxBenefits();
                 break;
             default:
                 printErrorMessage("Introduce a valid Heuristic");
@@ -116,7 +112,7 @@ public class Main {
                 successor = new SuccessorDouble();
                 break;
             case "sd":
-                successor = new StateSuccessor();
+                successor = new SuccessorBoth();
                 break;
             case "r":
                 successor = new SuccessorRandom();

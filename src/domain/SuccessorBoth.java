@@ -11,7 +11,7 @@ import IA.Bicing.Estaciones;
 
 import static java.lang.Math.min;
 
-public class StateSuccessor implements SuccessorFunction {
+public class SuccessorBoth implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
 
@@ -19,7 +19,7 @@ public class StateSuccessor implements SuccessorFunction {
         State board = (State) state;
 
         // For print
-        HeuristicFunction hf = new HeuristicMaxDemandSupplied();
+        HeuristicFunction hf = new HeuristicMaxObtained();
 
         ArrayList<Van> fleet = board.getFleet();
         Estaciones stations = board.getStations();
