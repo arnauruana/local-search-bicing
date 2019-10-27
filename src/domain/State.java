@@ -133,7 +133,6 @@ public class State {
         return true;
     }
 
-    // FIXME
     public void initRandomFixed(final int seed) {
         Random rand = new Random(seed);
         ArrayList<Integer> idStations = initIdStations(this.stations.size());
@@ -209,6 +208,7 @@ public class State {
     public void setDemandSupplied(final int demandSupplied) {
         this.demandSupplied = demandSupplied;
     }
+
     // ----------------------------- Consultants ------------------------------ //
 
     public Estaciones getStations() {
@@ -234,10 +234,10 @@ public class State {
     public int getBenefits() {
         return this.benefits;
     }
+
     public int getDemandSupplied() {
         return this.demandSupplied;
     }
-
 
     // ------------------------------ Operators ------------------------------- //
 
