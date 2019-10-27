@@ -257,8 +257,6 @@ public class State {
     }
 
     public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
-
-
         // Update origin
         Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
         this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed-taken);
