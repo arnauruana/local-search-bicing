@@ -6,6 +6,7 @@ import IA.Bicing.Estaciones;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Math.min;
 import static java.lang.System.out;
 
 
@@ -98,7 +99,9 @@ public class State {
     private ArrayList<Integer> initExcess(int size) {
         ArrayList<Integer> excess = new ArrayList<>(size);
         for (Estacion e : this.stations) {
-            excess.add(e.getNumBicicletasNext() - e.getDemanda());
+            int ex = e.getNumBicicletasNext() - e.getDemanda();
+            ex = min(ex, e.getNumBicicletasNoUsadas());
+            excess.add(ex);
         }
         return excess;
     }
@@ -111,19 +114,17 @@ public class State {
         return idStation;
     }
 
-    private ArrayList<Integer> getMaxDemand(ArrayList<Integer> d, ArrayList<Integer> id, int n) {
-        ArrayList<Integer> maxDemand = new ArrayList<>();
-        int k = 0;
-        while (k < n) {
-            int i = maxIndex(d);
-            if (d.get(i) <= 0)
+    private ArrayList<Integer> getMaxExcess(ArrayList<Integer> e, ArrayList<Integer> id, int n) {
+        ArrayList<Integer> maxExcess = new ArrayList<>();
+        for (int k = 0; k < n; k++) {
+            int i = maxIndex(e);
+            if (e.get(i) <= 0)
                 break;
-            maxDemand.add(i+k);
-            d.remove(i);
+            maxExcess.add(i+k);
+            e.remove(i);
             id.remove(i);
-            k++;
         }
-        return maxDemand;
+        return maxExcess;
     }
 
     private Boolean allAssigned(final ArrayList<Boolean> vector) {
@@ -157,7 +158,7 @@ public class State {
         int nvan = this.fleet.size();
         ArrayList<Integer> idStations = initIdStations(this.stations.size());
         ArrayList<Integer> excess = initExcess(this.stations.size());
-        ArrayList<Integer> maxExcess = getMaxDemand(excess, idStations, nvan);
+        ArrayList<Integer> maxExcess = getMaxExcess(excess, idStations, nvan);
         for (Van v: this.fleet) {
             if (maxExcess.size() == 0)
                 break;
