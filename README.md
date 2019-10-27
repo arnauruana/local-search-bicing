@@ -15,3 +15,6 @@ Input arguments:
 * args[10]: numIt
 * args[11]: k
 * args[12]: lambda
+
+Testing: 
+hc r min sd 25 1250 0 2 5 0 0 0 0
