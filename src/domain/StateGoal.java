@@ -14,13 +14,7 @@ import java.util.List;
 public class StateGoal implements GoalTest {
 
     public boolean isGoalState(Object state) {
-        State board = (State) state;
-        ArrayList<Van> fleet = board.getFleet();
-        for (Van actV : fleet) {
-            if (actV.getIsVisited() == false) return false;
-
-        }
-        return true;
+        return false;
     }
 
 }

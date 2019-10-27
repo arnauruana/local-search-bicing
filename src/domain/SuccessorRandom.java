@@ -23,6 +23,7 @@ public class SuccessorRandom implements SuccessorFunction {
         // For print
         HeuristicFunction hf = new HeuristicMinCost();
 
+        // TODO ACOTAR EL RANDOM
         ArrayList<Van> fleet = board.getFleet();
         int nVans = fleet.size();
         Estaciones stations = board.getStations();
