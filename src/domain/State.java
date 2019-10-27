@@ -256,6 +256,7 @@ public class State {
     }
 
     public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
+        this.demandSupplied += taken;
         // Update origin
         Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
         this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed-taken);
@@ -276,7 +277,7 @@ public class State {
 
         calculateCost(this.stations.get(origin), this.stations.get(firstDestination), taken+demand1);
         calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), taken);
-        this.demandSupplied += taken;
+
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
