@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.System.err;
 import static java.lang.System.out;
 
 
@@ -48,7 +49,8 @@ public class Main {
     }
 
     private static void printErrorMessage(String s) {
-        out.println(s);
+        err.println(s);
+        System.exit(1);
     }
 
     public static void main(String[] args) throws Exception {
