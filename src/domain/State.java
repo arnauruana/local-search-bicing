@@ -283,7 +283,7 @@ public class State {
         int cost = distance * kilometer_cost;
         this.cost += cost;
 
-        demandSupplied += taken;
+        this.demandSupplied += taken;
     }
 
     // -------------------------------- Driver -------------------------------- //

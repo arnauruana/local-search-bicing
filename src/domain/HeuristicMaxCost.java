@@ -2,7 +2,6 @@ package domain;
 
 import aima.search.framework.HeuristicFunction;
 
-
 public class HeuristicMaxCost implements HeuristicFunction {
 
     public double getHeuristicValue(Object obj) {
