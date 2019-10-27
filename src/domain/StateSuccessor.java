@@ -38,7 +38,7 @@ public class StateSuccessor implements SuccessorFunction {
                             State newBoard = new State(board);
                             newBoard.singleMove(nOrigin, j, numBikes);
                             newBoard.setStationVisited(nOrigin);
-                            String S = "Single: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
+                            String S = "Single: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
                             retval.add(new Successor(S, newBoard));
                         }
                     }
@@ -53,7 +53,7 @@ public class StateSuccessor implements SuccessorFunction {
                                     State newBoard = new State(board);
                                     newBoard.doubleMove(nOrigin, j, s, numBikes);
                                     newBoard.setStationVisited(nOrigin);
-                                    String S = "Double: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
+                                    String S = "Double: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
                                     retval.add(new Successor(S, newBoard));
                                 }
                             }
