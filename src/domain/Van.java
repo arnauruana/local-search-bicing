@@ -11,8 +11,9 @@ public class Van {
 
   // ============================== ATTRIBUTES ============================== //
 
-  private Integer stationID;     // origin station identifier
-  private Integer numBikes = 0;  // number of bikes being transported
+  private Integer stationID;          // origin station identifier
+  private Integer numBikes = 0;       // number of bikes being transported
+  private boolean isVisited = false;  // van visited
 
   // ------------------------------------------------------------------------ //
 
@@ -32,6 +33,10 @@ public class Van {
     this.stationID = stationID;
   }
 
+  void setIsVisited(boolean b) {
+    this.isVisited = b;
+  }
+
   // ----------------------------- Consultants ------------------------------ //
 
   Integer getOriginStationID() {
@@ -40,6 +45,10 @@ public class Van {
 
   Integer getNumBikes() {
     return this.numBikes;
+  }
+
+  Boolean getIsVisited() {
+    return this.isVisited;
   }
 
   // ------------------------------ Auxiliary ------------------------------- //
