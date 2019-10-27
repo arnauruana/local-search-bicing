@@ -78,7 +78,7 @@ public class State {
     public void initRandom(final int seed) {
         Random rand = new Random(seed);
         for (Van v: this.fleet) {
-            int est = rand.nextInt(this.stations.size()-1);
+            int est = rand.nextInt(this.stations.size());
             v.setOriginStationID(est);
         }
     }
@@ -139,18 +139,17 @@ public class State {
         ArrayList<Integer> idStations = initIdStations(this.stations.size());
         ArrayList<Boolean> assigned = initVisited(idStations.size());
         for (int i = 0; i < this.fleet.size(); ++i) {
-            int est = rand.nextInt(idStations.size()-1);
+            int est = rand.nextInt(idStations.size());
             while (assigned.get(est).equals(true)) {
-                est = rand.nextInt(idStations.size()-1);
+                est = rand.nextInt(idStations.size());
             }
             this.fleet.get(i).setOriginStationID(est);
             assigned.set(est, true);
             if (allAssigned(assigned)) {
-                for (int j = i; j < this.fleet.size(); ++j)
+                for (int j = i+1; j < this.fleet.size(); ++j)
                     this.fleet.get(j).setOriginStationID(0);
                 break;
             }
-
         }
     }
 

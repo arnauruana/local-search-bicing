@@ -37,7 +37,7 @@ public class SuccessorRandom implements SuccessorFunction {
 
         if (randomOp == 1) {
             int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(randomDest));
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
+            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
 
             State newBoard = new State(board);
             newBoard.singleMove(nOrigin, randomDest, randomBikes);
@@ -51,7 +51,7 @@ public class SuccessorRandom implements SuccessorFunction {
             while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
 
             int numBikes = calculateNumBikesDouble(stations.get(nOrigin), stations.get(randomDest), stations.get(randomSecondDest));
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1); // TODO why +1
+            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
 
             State newBoard = new State(board);
             newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
