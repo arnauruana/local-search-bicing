@@ -1,15 +1,17 @@
 package domain;
 
-import IA.Bicing.Estacion;
-import IA.Bicing.Estaciones;
 import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
+
+import IA.Bicing.Estacion;
+import IA.Bicing.Estaciones;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.min;
+
 
 public class SucessorDouble implements SuccessorFunction {
 
@@ -19,7 +21,7 @@ public class SucessorDouble implements SuccessorFunction {
         State board = (State) state;
 
         // For print
-        HeuristicFunction hf = new HeuristicMaxObtained();
+        HeuristicFunction hf = new HeuristicMinCost();
 
         ArrayList<Van> fleet = board.getFleet();
         Estaciones stations = board.getStations();
@@ -29,20 +31,6 @@ public class SucessorDouble implements SuccessorFunction {
             Van actV = fleet.get(i);
             int nOrigin = actV.getOriginStationID();
             if (!board.isVisited(nOrigin)) { // Si ja s'ha recollit a l'estació no podem fer res
-
-                // generateSingle
-                for (int j = 0; j < nStations; ++j) {
-                    if (nOrigin != j) {
-                        int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(j));
-                        if (numBikes > 0) {
-                            State newBoard = new State(board);
-                            newBoard.singleMove(nOrigin, j, numBikes);
-                            newBoard.setStationVisited(nOrigin);
-                            String S = "Single: " + numBikes + " Acc: " + -hf.getHeuristicValue(newBoard);
-                            retval.add(new Successor(S, newBoard));
-                        }
-                    }
-                }
                 // generateDouble
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {

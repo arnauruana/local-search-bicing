@@ -1,16 +1,18 @@
 package domain;
 
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
+
+import IA.Bicing.Estacion;
+import IA.Bicing.Estaciones;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import IA.Bicing.Estacion;
-import IA.Bicing.Estaciones;
-
 import static java.lang.Math.min;
+
 
 public class SuccessorRandom implements SuccessorFunction {
 
@@ -18,6 +20,8 @@ public class SuccessorRandom implements SuccessorFunction {
         ArrayList retval = new ArrayList();
         State board = (State) state;
 
+        // For print
+        HeuristicFunction hf = new HeuristicMinCost();
 
         ArrayList<Van> fleet = board.getFleet();
         int nVans = fleet.size();

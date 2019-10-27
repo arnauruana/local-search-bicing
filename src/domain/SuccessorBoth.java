@@ -3,13 +3,15 @@ package domain;
 import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
-import java.util.ArrayList;
-import java.util.List;
 
 import IA.Bicing.Estacion;
 import IA.Bicing.Estaciones;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.min;
+
 
 public class SuccessorBoth implements SuccessorFunction {
 
@@ -19,7 +21,7 @@ public class SuccessorBoth implements SuccessorFunction {
         State board = (State) state;
 
         // For print
-        HeuristicFunction hf = new HeuristicMaxObtained();
+        HeuristicFunction hf = new HeuristicMinCost();
 
         ArrayList<Van> fleet = board.getFleet();
         Estaciones stations = board.getStations();
