@@ -68,10 +68,10 @@ public class SuccessorDouble implements SuccessorFunction {
         if (excess > 0) {
             numBikes = min(excess, act.getNumBicicletasNoUsadas());
             numBikes = min(numBikes, Van.CAPACITY);
-
             int deficit1 = dest1.getDemanda() - dest1.getNumBicicletasNext();
             int deficit2 = dest2.getDemanda() - dest2.getNumBicicletasNext();
-            if (deficit1 > 0 && deficit1 < 30 && deficit2 > 0) {
+
+            if (deficit1 < numBikes && deficit1 > 0 && deficit2 > 0) {
                 numBikes = min(numBikes, deficit1 + deficit2);
 
             }
