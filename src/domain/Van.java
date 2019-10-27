@@ -6,9 +6,6 @@ public class Van {
   // ============================== ATTRIBUTES ============================== //
 
   private Integer stationID;          // origin station identifier
-
-  // ------------------------------------------------------------------------ //
-
   static final Integer CAPACITY = 30;  // maximum number of bikes
 
   // =============================== METHODS ================================ //
