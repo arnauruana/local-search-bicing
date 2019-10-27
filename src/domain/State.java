@@ -61,14 +61,6 @@ public class State {
         }
     }
 
-    private ArrayList<Boolean> initVisited(final int size) {
-        ArrayList<Boolean> visited = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            visited.add(false);
-        }
-        return visited;
-    }
-
     private void initFleet(final int nvan) {
         this.fleet = new ArrayList<>(nvan);
         for (int i = 0; i < nvan; i++) {
@@ -79,7 +71,7 @@ public class State {
     public void initRandom(final int seed) {
         Random rand = new Random(seed);
         for (Van v: this.fleet) {
-            int est = rand.nextInt(this.stations.size()-1);
+            int est = rand.nextInt(this.stations.size());
             v.setOriginStationID(est);
         }
     }
@@ -106,6 +98,16 @@ public class State {
         return excess;
     }
 
+    private ArrayList<Integer> initIsExcess(final ArrayList<Integer> excess) {
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i = 0; i < excess.size(); ++i) {
+            if (excess.get(i) > 0) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
     private ArrayList<Integer> initIdStations(int size) {
         ArrayList<Integer> idStation = new ArrayList<>(this.stations.size());
         for (int i = 0; i < size; i++) {
@@ -126,33 +128,6 @@ public class State {
         return maxExcess;
     }
 
-    private Boolean allAssigned(final ArrayList<Boolean> vector) {
-        for (Boolean bool : vector)
-            if (bool.equals(false))
-                return false;
-        return true;
-    }
-
-    public void initRandomFixed(final int seed) {
-        Random rand = new Random(seed);
-        ArrayList<Integer> idStations = initIdStations(this.stations.size());
-        ArrayList<Boolean> assigned = initVisited(idStations.size());
-        for (int i = 0; i < this.fleet.size(); ++i) {
-            int est = rand.nextInt(idStations.size()-1);
-            while (assigned.get(est).equals(true)) {
-                est = rand.nextInt(idStations.size()-1);
-            }
-            this.fleet.get(i).setOriginStationID(est);
-            assigned.set(est, true);
-            if (allAssigned(assigned)) {
-                for (int j = i; j < this.fleet.size(); ++j)
-                    this.fleet.get(j).setOriginStationID(0);
-                break;
-            }
-
-        }
-    }
-
     public void initFixed() {
         int nvan = this.fleet.size();
         ArrayList<Integer> idStations = initIdStations(this.stations.size());
@@ -164,6 +139,23 @@ public class State {
             v.setOriginStationID(maxExcess.get(0));
             maxExcess.remove(0);
         }
+    }
+
+    public void initCombined(final int seed) {
+        Random rand = new Random(seed);
+        ArrayList<Integer> excess = initExcess(this.stations.size());
+        ArrayList<Integer> isExcess = initIsExcess(excess);
+        for (Van v : this.fleet) {
+            if (!isExcess.isEmpty()) {
+                int est = rand.nextInt(isExcess.size());
+                v.setOriginStationID(isExcess.get(est));
+                isExcess.remove(est);
+            }
+            else {
+                v.setOriginStationID(0);
+            }
+        }
+
     }
 
     //  ------------------------------ Modifiers ------------------------------- //

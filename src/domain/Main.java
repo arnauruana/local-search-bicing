@@ -82,7 +82,7 @@ public class Main {
                 initialState.initFixed();
                 break;
             case "rf":
-                initialState.initRandomFixed(Integer.parseInt(args[7]));
+                initialState.initCombined(Integer.parseInt(args[7]));
                 break;
             default:
                 printErrorMessage("Introduce a valid Initial State");
