@@ -51,7 +51,7 @@ public class StateSuccessor implements SuccessorFunction {
                                 for (Integer k = 1; k <= numBikes; ++k) {
                                     State newBoard = new State(board);
                                     newBoard.doubleMove(nOrigin, j, s, k);
-                                    newBoard.setStationVisited(i);
+                                    newBoard.setStationVisited(nOrigin);
                                     String S = "Double: " + k + " Incr: " + -hf.getHeuristicValue(newBoard);
                                     retval.add(new Successor(S, newBoard));
                                 }
