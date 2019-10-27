@@ -49,13 +49,12 @@ public class Main {
 
     private static void printErrorMessage(String s) {
         out.println(s);
-        System.exit(1);
     }
 
     public static void main(String[] args) throws Exception {
 
         // Local Search Algorithm
-        Search search;
+        Search search = null;
         switch (args[0]) {
             case "hc":
                 search = new HillClimbingSearch();
@@ -88,7 +87,7 @@ public class Main {
         }
 
         // Heuristic
-        HeuristicFunction heuristic;
+        HeuristicFunction heuristic = null;
         switch (args[2]) {
             case "max":
                 heuristic = new HeuristicMaxObtained();
@@ -101,7 +100,7 @@ public class Main {
         }
 
         // Set of Operators
-        SuccessorFunction successor;
+        SuccessorFunction successor = null;
         if (args[0].equals("sa") && !args[3].equals("r"))
             printErrorMessage("Introduce a valid set of Operators");
         switch (args[3]) {
