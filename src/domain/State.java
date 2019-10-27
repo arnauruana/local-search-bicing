@@ -332,8 +332,7 @@ public class State {
         out.print("  ⤷ fleet(" + this.fleet.size() + "):\t\t"); this.printFleet();
         out.print("  ⤷ cost:\t\t\t"); this.printCost();
         out.print("  ⤷ benefits:\t\t"); this.printBenefits();
-        out.print("  ⤷ benefits:\t\t"); this.printDemandSupplied();
-
+        out.print("  ⤷ demmandSupp:\t"); this.printDemandSupplied();
     }
 
 }
