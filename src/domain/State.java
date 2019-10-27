@@ -265,7 +265,7 @@ public class State {
 
         // Update dest1
         Integer nextD1 = this.stations.get(firstDestination).getNumBicicletasNext();
-        Integer demand1 = this.stations.get(firstDestination).getDemanda() - nextD1;
+        Integer demand1 = (this.stations.get(firstDestination).getDemanda() - nextD1);
         this.stations.get(firstDestination).setNumBicicletasNext(nextD1 - demand1);
 
         // Update Van

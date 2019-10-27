@@ -59,13 +59,16 @@ public class SuccessorRandom implements SuccessorFunction {
 
             State newBoard = new State(board);
             newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
+
+            // TODO Arreglar demandes
+            Integer demand1 = (stations.get(randomDest).getDemanda() -  stations.get(randomDest).getNumBicicletasNext());
             String S = "Operator: double " + "\n"+
                     "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
                     "Origin: " + nOrigin + "\n" +
                     "First destination: " + randomDest + "\n" +
-                    "Bikes moved: " + (stations.get(randomDest).getDemanda() -  stations.get(randomDest).getNumBicicletasNext())+ "\n" +
+                    "Bikes moved: " + demand1 + "\n" +
                     "Second destination: " + randomSecondDest + "\n" +
-                    "Bikes moved: " + (stations.get(randomSecondDest).getDemanda() -  stations.get(randomSecondDest).getNumBicicletasNext()) + "\n" +
+                    "Bikes moved: " + (randomBikes - demand1) + "\n" +
                     "Total bikes moved: " + numBikes + "\n";
             retval.add(new Successor(S, newBoard));
         }
@@ -89,11 +92,13 @@ public class SuccessorRandom implements SuccessorFunction {
         int excess = act.getNumBicicletasNext() - act.getDemanda();
         if (excess > 0) {
             numBikes = min(excess, act.getNumBicicletasNoUsadas());
+            numBikes = min(numBikes, Van.CAPACITY);
+
             int deficit1 = dest1.getDemanda() - dest1.getNumBicicletasNext();
             int deficit2 = dest2.getDemanda() - dest2.getNumBicicletasNext();
-            if (deficit1 > 0 && deficit2 > 0) {
+            if (deficit1 > 0 && deficit1 < 30 && deficit2 > 0) {
                 numBikes = min(numBikes, deficit1 + deficit2);
-                numBikes = min(numBikes, Van.CAPACITY);
+
             }
             else numBikes = 0;
         }
