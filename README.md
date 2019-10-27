@@ -4,7 +4,7 @@ Local Search AI practice.
 Input arguments:
 * args[0]: Local Search Algorithm (hc/sa)
 * args[1]: Initial state (r/f/rf)
-* args[2]: Heuristic (d/c/b)
+* args[2]: Heuristic (max/min)
 * args[3]: Set of operators (s/d/sd)
 * args[4]: Number of stations
 * args[5]: Number of bikes

@@ -13,7 +13,7 @@ import java.util.List;
 import static java.lang.Math.min;
 
 
-public class SucessorDouble implements SuccessorFunction {
+public class SuccessorDouble implements SuccessorFunction {
 
     public List getSuccessors(Object state) {
 
@@ -51,18 +51,6 @@ public class SucessorDouble implements SuccessorFunction {
             }
         }
         return retval;
-    }
-
-    private int calculateNumBikes(Estacion act, Estacion dest) {
-        int numBikes = 0;
-        int excess = act.getNumBicicletasNext() - act.getDemanda();
-        if (excess > 0) {
-            numBikes = min(excess, act.getNumBicicletasNoUsadas());
-            int deficit = dest.getDemanda() - dest.getNumBicicletasNext();
-            numBikes = min(numBikes, deficit);
-            numBikes = min(numBikes, Van.CAPACITY);
-        }
-        return numBikes;
     }
 
     private int calculateNumBikesDouble(Estacion act, Estacion dest1, Estacion dest2) {

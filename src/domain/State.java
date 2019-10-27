@@ -253,10 +253,12 @@ public class State {
 
         calculateCost(this.stations.get(origin), this.stations.get(destination), taken);
         this.demandSupplied += taken;
+        this.benefits = this.demandSupplied - this.cost;
     }
 
     public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
-        this.demandSupplied += taken;
+
+
         // Update origin
         Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
         this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed-taken);
@@ -269,15 +271,16 @@ public class State {
         this.stations.get(firstDestination).setNumBicicletasNext(nextD1 - demand1);
 
         // Update Van
-        taken -= demand1;
+        Integer demand2 = taken - demand1;
 
         // Update dest2
         Integer nextD2 = this.stations.get(secondDestination).getNumBicicletasNext();
-        this.stations.get(secondDestination).setNumBicicletasNext(nextD2 - taken);
+        this.stations.get(secondDestination).setNumBicicletasNext(nextD2 - demand2);
 
-        calculateCost(this.stations.get(origin), this.stations.get(firstDestination), taken+demand1);
-        calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), taken);
-
+        calculateCost(this.stations.get(origin), this.stations.get(firstDestination), demand1);
+        calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), demand2);
+        this.demandSupplied += taken;
+        this.benefits = this.demandSupplied - this.cost;
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
@@ -285,7 +288,6 @@ public class State {
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
         this.cost += cost;
-        this.benefits += this.demandSupplied + this.cost;
     }
 
     // -------------------------------- Driver -------------------------------- //
