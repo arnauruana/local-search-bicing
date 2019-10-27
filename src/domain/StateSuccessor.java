@@ -34,19 +34,13 @@ public class StateSuccessor implements SuccessorFunction {
                 for (int j = 0; j < nStations; ++j) {
                     if (nOrigin != j) {
                         int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(j));
-                        /*for (Integer k = 1; k <= numBikes ; ++k) {
+                        if (numBikes > 0) {
                             State newBoard = new State(board);
-                            newBoard.singleMove(nOrigin, j, k);
+                            newBoard.singleMove(nOrigin, j, numBikes);
                             newBoard.setStationVisited(nOrigin);
-                            String S = "Single: " + k + " Incr: " + -hf.getHeuristicValue(newBoard);
+                            String S = "Single: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
                             retval.add(new Successor(S, newBoard));
                         }
-                        */
-                        State newBoard = new State(board);
-                        newBoard.singleMove(nOrigin, j, numBikes);
-                        newBoard.setStationVisited(nOrigin);
-                        String S = "Single: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
-                        retval.add(new Successor(S, newBoard));
                     }
                 }
                 // generateDouble
@@ -55,19 +49,13 @@ public class StateSuccessor implements SuccessorFunction {
                         for (Integer s = 0; s < nStations; ++s) {
                             if (!s.equals(j)) {
                                 int numBikes =  calculateNumBikesDouble(stations.get(nOrigin), stations.get(j), stations.get(s));
-                                /*for (Integer k = 1; k <= numBikes; ++k) {
+                                if (numBikes > 0) {
                                     State newBoard = new State(board);
-                                    newBoard.doubleMove(nOrigin, j, s, k);
+                                    newBoard.doubleMove(nOrigin, j, s, numBikes);
                                     newBoard.setStationVisited(nOrigin);
-                                    String S = "Double: " + k + " Incr: " + -hf.getHeuristicValue(newBoard);
+                                    String S = "Double: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
                                     retval.add(new Successor(S, newBoard));
                                 }
-                                 */
-                                State newBoard = new State(board);
-                                newBoard.doubleMove(nOrigin, j, s, numBikes);
-                                newBoard.setStationVisited(nOrigin);
-                                String S = "Double: " + numBikes + " Incr: " + -hf.getHeuristicValue(newBoard);
-                                retval.add(new Successor(S, newBoard));
                             }
                         }
                     }
