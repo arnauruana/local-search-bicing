@@ -100,7 +100,7 @@ public class State {
         ArrayList<Integer> excess = new ArrayList<>(size);
         for (Estacion e : this.stations) {
             int ex = e.getNumBicicletasNext() - e.getDemanda();
-            ex = min(ex, e.getNumBicicletasNoUsadas());
+            if (ex > 0) ex = min(ex, e.getNumBicicletasNoUsadas());
             excess.add(ex);
         }
         return excess;
@@ -120,9 +120,8 @@ public class State {
             int i = maxIndex(e);
             if (e.get(i) <= 0)
                 break;
-            maxExcess.add(i+k);
-            e.remove(i);
-            id.remove(i);
+            maxExcess.add(i);
+            e.set(i, -1);
         }
         return maxExcess;
     }
