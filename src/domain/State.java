@@ -78,7 +78,7 @@ public class State {
     public void initRandom(final int seed) {
         Random rand = new Random(seed);
         for (Van v: this.fleet) {
-            int est = rand.nextInt(this.stations.size());
+            int est = rand.nextInt(this.stations.size()-1);
             v.setOriginStationID(est);
         }
     }
@@ -138,17 +138,18 @@ public class State {
         ArrayList<Integer> idStations = initIdStations(this.stations.size());
         ArrayList<Boolean> assigned = initVisited(idStations.size());
         for (int i = 0; i < this.fleet.size(); ++i) {
-            int est = rand.nextInt(idStations.size());
+            int est = rand.nextInt(idStations.size()-1);
             while (assigned.get(est).equals(true)) {
-                est = rand.nextInt(idStations.size());
+                est = rand.nextInt(idStations.size()-1);
             }
             this.fleet.get(i).setOriginStationID(est);
             assigned.set(est, true);
             if (allAssigned(assigned)) {
-                for (int j = i+1; j < this.fleet.size(); ++j)
+                for (int j = i; j < this.fleet.size(); ++j)
                     this.fleet.get(j).setOriginStationID(0);
                 break;
             }
+
         }
     }
 
@@ -235,8 +236,7 @@ public class State {
         return this.benefits;
     }
 
-    public int getDemandSupplied() {
-        return this.demandSupplied;
+    public int getDemandSupplied() { return this.demandSupplied;
     }
 
     // ------------------------------ Operators ------------------------------- //
@@ -278,11 +278,11 @@ public class State {
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
+
         int kilometer_cost = (taken + 9)/10;
         int distance = Math.abs(origin.getCoordX() - destination.getCoordX()) + Math.abs(origin.getCoordY() - destination.getCoordY());
         int cost = distance * kilometer_cost;
         this.cost += cost;
-
         this.demandSupplied += taken;
     }
 
