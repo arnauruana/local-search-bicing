@@ -23,7 +23,6 @@ public class SuccessorRandom implements SuccessorFunction {
         // For print
         HeuristicFunction hf = new HeuristicMinCost();
 
-        // TODO ACOTAR EL RANDOM
         ArrayList<Van> fleet = board.getFleet();
         int nVans = fleet.size();
         Estaciones stations = board.getStations();
@@ -51,6 +50,8 @@ public class SuccessorRandom implements SuccessorFunction {
                     "Bikes moved: " + numBikes + "\n";
             retval.add(new Successor(S, newBoard));
         }
+
+        // TODO Arregglar doublemove + cota bicis mogudes
         else {
             int randomSecondDest  = ThreadLocalRandom.current().nextInt(0, nStations + 1);
             while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
@@ -61,7 +62,6 @@ public class SuccessorRandom implements SuccessorFunction {
             State newBoard = new State(board);
             newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
 
-            // TODO Arreglar demandes
             Integer demand1 = (stations.get(randomDest).getDemanda() -  stations.get(randomDest).getNumBicicletasNext());
             String S = "Operator: double " + "\n"+
                     "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
