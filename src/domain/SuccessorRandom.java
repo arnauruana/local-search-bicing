@@ -28,50 +28,53 @@ public class SuccessorRandom implements SuccessorFunction {
         Estaciones stations = board.getStations();
         int nStations = stations.size();
 
-        int randomVan  = ThreadLocalRandom.current().nextInt(0, nVans + 1);
+        int randomVan  = ThreadLocalRandom.current().nextInt(0, nVans);
         Van actV = fleet.get(randomVan);
         int nOrigin = actV.getOriginStationID();
 
         int randomOp  = ThreadLocalRandom.current().nextInt(0, 2);
 
-        int randomDest  = ThreadLocalRandom.current().nextInt(0, nStations + 1);
-        while (randomDest == nOrigin) randomDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
+        int randomDest  = ThreadLocalRandom.current().nextInt(0, nStations);
+        while (randomDest == nOrigin) randomDest = ThreadLocalRandom.current().nextInt(0, nStations);
 
         if (randomOp == 1) {
             int numBikes = calculateNumBikes(stations.get(nOrigin), stations.get(randomDest));
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
-
-            State newBoard = new State(board);
-            newBoard.singleMove(nOrigin, randomDest, randomBikes);
-            String S = "Operator: single " + "\n" +
-                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
-                    "Origin: " + nOrigin + "\n" +
-                    "Destination: " + randomDest + "\n" +
-                    "Bikes moved: " + numBikes + "\n";
-            retval.add(new Successor(S, newBoard));
+            if (numBikes > 0) {
+                int randomBikes = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
+                State newBoard = new State(board);
+                newBoard.singleMove(nOrigin, randomDest, randomBikes);
+                String S = "Operator: single " + "\n" +
+                        "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                        "Origin: " + nOrigin + "\n" +
+                        "Destination: " + randomDest + "\n" +
+                        "Bikes moved: " + numBikes + "\n";
+                retval.add(new Successor(S, newBoard));
+            }
         }
 
         // TODO Arregglar doublemove + cota bicis mogudes
         else {
-            int randomSecondDest  = ThreadLocalRandom.current().nextInt(0, nStations + 1);
-            while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations + 1);
+            int randomSecondDest  = ThreadLocalRandom.current().nextInt(0, nStations);
+            while (randomDest == randomSecondDest) randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations);
 
             int numBikes = calculateNumBikesDouble(stations.get(nOrigin), stations.get(randomDest), stations.get(randomSecondDest));
-            int randomBikes  = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
+            if (numBikes > 0) {
+                int randomBikes = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
 
-            State newBoard = new State(board);
-            newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
+                State newBoard = new State(board);
+                newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
 
-            Integer demand1 = (stations.get(randomDest).getDemanda() -  stations.get(randomDest).getNumBicicletasNext());
-            String S = "Operator: double " + "\n"+
-                    "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
-                    "Origin: " + nOrigin + "\n" +
-                    "First destination: " + randomDest + "\n" +
-                    "Bikes moved: " + demand1 + "\n" +
-                    "Second destination: " + randomSecondDest + "\n" +
-                    "Bikes moved: " + (randomBikes - demand1) + "\n" +
-                    "Total bikes moved: " + numBikes + "\n";
-            retval.add(new Successor(S, newBoard));
+                Integer demand1 = (stations.get(randomDest).getDemanda() - stations.get(randomDest).getNumBicicletasNext());
+                String S = "Operator: double " + "\n" +
+                        "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
+                        "Origin: " + nOrigin + "\n" +
+                        "First destination: " + randomDest + "\n" +
+                        "Bikes moved: " + demand1 + "\n" +
+                        "Second destination: " + randomSecondDest + "\n" +
+                        "Bikes moved: " + (randomBikes - demand1) + "\n" +
+                        "Total bikes moved: " + numBikes + "\n";
+                retval.add(new Successor(S, newBoard));
+            }
         }
         return retval;
     }
