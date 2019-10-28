@@ -30,16 +30,21 @@ public class SuccessorRandom implements SuccessorFunction {
         int nStations = stations.size();
         boolean able = false;
         for (int f = 0; f < nStations; ++f) {
-            if (board.isVisited(f))  {
+            if (!board.isVisited(f))  {
+                if (stationWithOutVan(f, fleet)) {
+                    board.setStationVisited(f);
+                    break;
+                }
                 able = true;
-                f = nStations;
+                break;
             }
         }
+        if (allVisited(board)) return retval;
         if (able) {
             // Random Van
             int randomVan = ThreadLocalRandom.current().nextInt(0, nVans);
             Van actV = fleet.get(randomVan);
-            while (board.isVisited(actV.getOriginStationID()) == true) {
+            while (board.isVisited(actV.getOriginStationID())) {
                 randomVan = ThreadLocalRandom.current().nextInt(0, nVans);
                 actV = fleet.get(randomVan);
             }
@@ -70,7 +75,12 @@ public class SuccessorRandom implements SuccessorFunction {
                 int randomDest = ThreadLocalRandom.current().nextInt(0, nStations);
                 int randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations);
                 while (randomDest == nOrigin || randomSecondDest == nOrigin || randomDest == randomSecondDest) {
-                    randomDest = ThreadLocalRandom.current().nextInt(0, nStations);
+                    if (randomDest == nOrigin) {
+                        randomDest = ThreadLocalRandom.current().nextInt(0, nStations);
+                    }
+                    else {
+                        randomSecondDest = ThreadLocalRandom.current().nextInt(0, nStations);
+                    }
                 }
                 int randomBikes = ThreadLocalRandom.current().nextInt(0, Van.CAPACITY);
                 State newBoard = new State(board);
@@ -89,5 +99,21 @@ public class SuccessorRandom implements SuccessorFunction {
             }
         }
         return retval;
+    }
+
+    private boolean allVisited(State board) {
+        for (int i = 0; i < board.getStations().size(); i++) {
+            if (!board.isVisited(i))
+                return false;
+        }
+        return true;
+    }
+
+    private boolean stationWithOutVan(int f, ArrayList<Van> fleet) {
+        for (int i = 0; i < fleet.size(); i++) {
+            if (fleet.get(i).getOriginStationID() == f)
+                return false;
+        }
+        return true;
     }
 }

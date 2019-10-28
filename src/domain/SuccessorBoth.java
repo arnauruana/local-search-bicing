@@ -21,7 +21,7 @@ public class SuccessorBoth implements SuccessorFunction {
         State board = (State) state;
 
         // For print
-        HeuristicFunction hf = new HeuristicMinCost();
+        HeuristicFunction hf = new HeuristicMaxObtained();
 
         ArrayList<Van> fleet = board.getFleet();
         Estaciones stations = board.getStations();

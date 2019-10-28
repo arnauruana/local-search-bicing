@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="domain.Main" />
     <module name="bicing-ai" />
-    <option name="PROGRAM_PARAMETERS" value="sa r min r 25 1250 0 20 5 10000 20 1 0.05" />
+    <option name="PROGRAM_PARAMETERS" value="sa r min r 25 1250 0 20 5 100 20 1 0.05" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="domain.*" />
