@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Math.min;
-import static java.lang.System.out;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 
-public class State {
+public class StateRandom {
 
     // ============================== ATTRIBUTES ============================== //
 
@@ -29,12 +30,12 @@ public class State {
     // ----------------------------- Constructors ----------------------------- //
 
     // Initial constructor
-    public State(int nest, int nbic, int dem, int seed, int nvan) {
-        State.nest = nest;
-        State.nbic = nbic;
-        State.dem  = dem;
-        State.seed = seed;
-        this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
+    public StateRandom(int nest, int nbic, int dem, int seed, int nvan) {
+        StateRandom.nest = nest;
+        StateRandom.nbic = nbic;
+        StateRandom.dem  = dem;
+        StateRandom.seed = seed;
+        this.stations = new Estaciones(StateRandom.nest, StateRandom.nbic, StateRandom.dem, StateRandom.seed);
         initIsVisited(nest);
         initFleet(nvan);
         this.cost = 0;
@@ -43,7 +44,7 @@ public class State {
     }
 
     // Copy constructor
-    public State(final State state) {
+    public StateRandom(final StateRandom state) {
         this.setStations(state.getStations());
         this.setIsVisited(state.getIsVisited());
         this.setFleet(state.getFleet());
@@ -161,7 +162,7 @@ public class State {
     //  ------------------------------ Modifiers ------------------------------- //
 
     private void setStations(Estaciones stations) {
-        this.stations = new Estaciones(State.nest, State.nbic, State.dem, State.seed);
+        this.stations = new Estaciones(StateRandom.nest, StateRandom.nbic, StateRandom.dem, StateRandom.seed);
         for (int i = 0; i < this.stations.size(); i++) {
             Estacion eAux = stations.get(i);
             Estacion e = new Estacion(eAux.getCoordX()/100, eAux.getCoordY()/100);
@@ -233,44 +234,123 @@ public class State {
 
     // ------------------------------ Operators ------------------------------- //
 
-    public void singleMove(Integer origin, Integer destination, Integer taken) {
-        Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
-        this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed - taken);
+    public void singleMove(Integer o, Integer d, Integer taken) {
 
-        Integer nextO = this.stations.get(origin).getNumBicicletasNext();
-        this.stations.get(origin).setNumBicicletasNext(nextO - taken);
+        Estacion origin = this.stations.get(o);
+        Estacion destination = this.stations.get(d);
 
-        Integer nextD = this.stations.get(destination).getNumBicicletasNext();
-        this.stations.get(destination).setNumBicicletasNext(nextD + taken);
+        Integer excess = origin.getNumBicicletasNext() - origin.getDemanda();
+        excess = min(excess, origin.getNumBicicletasNoUsadas());
+        excess = min(excess, Van.CAPACITY);
 
-        calculateCost(this.stations.get(origin), this.stations.get(destination), taken);
-        this.demandSupplied += taken;
+        int demand = destination.getDemanda() - destination.getNumBicicletasNext();
+        if (excess < taken || taken > demand) {
+            if (excess <= 0) this.demandSupplied += excess;
+            else if (excess < taken) this.demandSupplied -= (taken - excess);
+            // Update origin
+            Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
+            this.stations.get(o).setNumBicicletasNoUsadas(nonUsed - taken);
+            Integer nextO = this.stations.get(o).getNumBicicletasNext();
+            this.stations.get(o).setNumBicicletasNext(nextO - taken);
+
+            // Update first
+            this.stations.get(d).setNumBicicletasNext(destination.getNumBicicletasNext() + taken);
+            if (demand > 0) {
+                if (demand >= taken) this.demandSupplied += taken;
+                else this.demandSupplied += demand;
+            }
+
+        }
+        else{
+            Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
+            this.stations.get(o).setNumBicicletasNoUsadas(nonUsed - taken);
+
+            Integer nextO = this.stations.get(o).getNumBicicletasNext();
+            this.stations.get(o).setNumBicicletasNext(nextO - taken);
+
+            Integer nextD = this.stations.get(d).getNumBicicletasNext();
+            this.stations.get(d).setNumBicicletasNext(nextD + taken);
+
+            this.demandSupplied += taken;
+        }
+        calculateCost(this.stations.get(o), this.stations.get(d), taken);
         this.benefits = (this.demandSupplied - this.cost);
     }
 
-    public void doubleMove(Integer origin, Integer firstDestination, Integer secondDestination, Integer taken) {
-        // Update origin
-        Integer nonUsed = this.stations.get(origin).getNumBicicletasNoUsadas();
-        this.stations.get(origin).setNumBicicletasNoUsadas(nonUsed  -taken);
-        Integer nextO = this.stations.get(origin).getNumBicicletasNext();
-        this.stations.get(origin).setNumBicicletasNext(nextO - taken);
+    public void doubleMove(Integer o, Integer fD, Integer sD, Integer taken) {
 
-        // Update dest1
-        Integer nextD1 = this.stations.get(firstDestination).getNumBicicletasNext();
-        Integer demand1 = (this.stations.get(firstDestination).getDemanda() - nextD1);
-        this.stations.get(firstDestination).setNumBicicletasNext(nextD1 + demand1);
+        Estacion origin = this.stations.get(o);
+        Estacion firstDestination = this.stations.get(fD);
+        Estacion secondDestination = this.stations.get(sD);
 
-        // Update Van
-        Integer demand2 = taken - demand1;
+        Integer excess = origin.getNumBicicletasNext() - origin.getDemanda();
+        excess = min(excess, origin.getNumBicicletasNoUsadas());
+        excess = min(excess, Van.CAPACITY);
 
-        // Update dest2
-        Integer nextD2 = this.stations.get(secondDestination).getNumBicicletasNext();
-        this.stations.get(secondDestination).setNumBicicletasNext(nextD2 + demand2);
+        int firstDemand = firstDestination.getDemanda() - firstDestination.getNumBicicletasNext();
+        int secondDemand = secondDestination.getDemanda() - secondDestination.getNumBicicletasNext();
+        if (firstDemand < 1 || secondDemand < 1 || taken > excess || firstDemand > excess) {
+            // Working with Simulated Annealing
 
-        calculateCost(this.stations.get(origin), this.stations.get(firstDestination), demand1);
-        calculateCost(this.stations.get(firstDestination), this.stations.get(secondDestination), demand2);
-        this.demandSupplied += taken;
-        this.benefits = (this.demandSupplied - this.cost);
+            // Apliquem penalització
+            if (excess <= 0) this.demandSupplied += excess;
+            else if (excess < taken) this.demandSupplied -= (taken - excess);
+            // Update origin
+            Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
+            this.stations.get(o).setNumBicicletasNoUsadas(nonUsed - taken);
+            Integer nextO = this.stations.get(o).getNumBicicletasNext();
+            this.stations.get(o).setNumBicicletasNext(nextO - taken);
+
+
+            int firstDrop = ThreadLocalRandom.current().nextInt(0, taken+1);
+            // Update first
+            Integer nextD1 = this.stations.get(fD).getNumBicicletasNext();
+            Integer demand1 = (this.stations.get(fD).getDemanda() - nextD1);
+            this.stations.get(fD).setNumBicicletasNext(nextD1 + firstDrop);
+            if (demand1 > 0) {
+                if (demand1 >= firstDrop) this.demandSupplied += firstDrop;
+                else this.demandSupplied += demand1;
+            }
+
+            // Update second
+            int secondDrop  = taken-firstDrop;
+            Integer nextD2 = this.stations.get(sD).getNumBicicletasNext();
+            Integer demand2 = (this.stations.get(sD).getDemanda() - nextD2);
+            this.stations.get(sD).setNumBicicletasNext(nextD2 + secondDrop);
+            if (demand2 > 0) {
+                if (demand2 >= secondDrop) this.demandSupplied += secondDrop;
+                else this.demandSupplied += demand2;
+            }
+
+            calculateCost(this.stations.get(o), this.stations.get(fD), demand1);
+            calculateCost(this.stations.get(fD), this.stations.get(sD), demand2);
+            this.benefits = (this.demandSupplied - this.cost);
+        }
+        else {
+            // Working with Hill Climbing
+            // Update origin
+            Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
+            this.stations.get(o).setNumBicicletasNoUsadas(nonUsed - taken);
+            Integer nextO = this.stations.get(o).getNumBicicletasNext();
+            this.stations.get(o).setNumBicicletasNext(nextO - taken);
+
+            // Update dest1
+            Integer nextD1 = this.stations.get(fD).getNumBicicletasNext();
+            Integer demand1 = (this.stations.get(fD).getDemanda() - nextD1);
+            this.stations.get(fD).setNumBicicletasNext(nextD1 - demand1);
+
+            // Update Van
+            Integer demand2 = taken - demand1;
+
+            // Update dest2
+            Integer nextD2 = this.stations.get(sD).getNumBicicletasNext();
+            this.stations.get(sD).setNumBicicletasNext(nextD2 - demand2);
+
+            calculateCost(this.stations.get(o), this.stations.get(fD), demand1);
+            calculateCost(this.stations.get(fD), this.stations.get(sD), demand2);
+            this.demandSupplied += taken;
+            this.benefits = (this.demandSupplied - this.cost);
+        }
     }
 
     private void calculateCost(Estacion origin, Estacion destination, Integer taken) {
