@@ -70,7 +70,7 @@ public class State {
     }
 
     public void initRandom(final int seed) {
-        Random rand = new Random(seed);
+        Random rand = new Random();
         for (Van v: this.fleet) {
             int est = rand.nextInt(this.stations.size());
             v.setOriginStationID(est);
@@ -143,7 +143,7 @@ public class State {
     }
 
     public void initCombined(final int seed) {
-        Random rand = new Random(seed);
+        Random rand = new Random();
         ArrayList<Integer> excess = initExcess(this.stations.size());
         ArrayList<Integer> isExcess = initIsExcess(excess);
         for (Van v : this.fleet) {
