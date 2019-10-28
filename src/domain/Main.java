@@ -65,7 +65,7 @@ public class Main {
                 int maxIt  = Integer.parseInt(args[9]);
                 int numIt  = Integer.parseInt(args[10]);
                 int k      = Integer.parseInt(args[11]);
-                int lambda = Integer.parseInt(args[12]);
+                double lambda = Double.parseDouble(args[12]);
                 search = new SimulatedAnnealingSearch(maxIt, numIt, k, lambda);
                 break;
             default:
