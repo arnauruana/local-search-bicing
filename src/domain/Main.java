@@ -129,10 +129,15 @@ public class Main {
         SearchAgent agent = new SearchAgent(problem, search);
         long endTime = System.nanoTime();
 
-        Main.printInstrumentation(agent.getInstrumentation());
-        Main.printActions(agent.getActions());
-        Main.printElapsedTime(startTime, endTime);
+        if (args[0].equals("hc")) {
+            Main.printInstrumentation(agent.getInstrumentation());
+            Main.printActions(agent.getActions());
+            Main.printElapsedTime(startTime, endTime);
+        }
 
+        State state = (State) search.getGoalState();
+        out.println(state.getBenefits());
+        out.println(state.getDemandSupplied());
     }
 
 }
