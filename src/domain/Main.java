@@ -116,7 +116,7 @@ public class Main {
                 successor = new SuccessorBoth();
                 break;
             case "r":
-                successor = new SuccessorRandomAcotat();
+                successor = new SuccessorRandom();
                 break;
             default:
                 printErrorMessage("Introduce a valid set of Operators");

@@ -50,6 +50,7 @@ public class SuccessorRandomAcotat implements SuccessorFunction {
             int randomBikes = ThreadLocalRandom.current().nextInt(1, numBikes + 1);
             State newBoard = new State(board);
             newBoard.singleMove(nOrigin, randomDest, randomBikes);
+            newBoard.setStationVisited(nOrigin);
             String S = "Operator: single " + "\n" +
                     "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
                     "Origin: " + nOrigin + "\n" +
@@ -67,6 +68,7 @@ public class SuccessorRandomAcotat implements SuccessorFunction {
             int randomBikes = ThreadLocalRandom.current().nextInt(0, numBikes + 1);
             State newBoard = new State(board);
             newBoard.doubleMove(nOrigin, randomDest, randomSecondDest, randomBikes);
+            newBoard.setStationVisited(nOrigin);
             Integer demand1 = (stations.get(randomDest).getDemanda() - stations.get(randomDest).getNumBicicletasNext());
             String S = "Operator: double " + "\n" +
                     "Heuristic value: " + -hf.getHeuristicValue(newBoard) + "\n" +
