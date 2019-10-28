@@ -136,8 +136,11 @@ public class Main {
         }
 
         State state = (State) search.getGoalState();
+        out.println(state.getCost());
         out.println(state.getBenefits());
         out.println(state.getDemandSupplied());
+
+
     }
 
 }

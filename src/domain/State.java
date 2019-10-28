@@ -245,7 +245,7 @@ public class State {
 
         int demand = destination.getDemanda() - destination.getNumBicicletasNext();
         if (excess < taken || taken > demand) {
-            if (excess <= 0) this.demandSupplied += excess;
+            if (excess <= 0) this.demandSupplied -= taken;
             else if (excess < taken) this.demandSupplied -= (taken - excess);
             // Update origin
             Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
@@ -293,7 +293,7 @@ public class State {
             // Working with Simulated Annealing
 
             // Apliquem penalització
-            if (excess <= 0) this.demandSupplied += excess;
+            if (excess <= 0) this.demandSupplied -= taken;
             else if (excess < taken) this.demandSupplied -= (taken - excess);
             // Update origin
             Integer nonUsed = this.stations.get(o).getNumBicicletasNoUsadas();
@@ -322,8 +322,8 @@ public class State {
                 else this.demandSupplied += demand2;
             }
 
-            calculateCost(this.stations.get(o), this.stations.get(fD), demand1);
-            calculateCost(this.stations.get(fD), this.stations.get(sD), demand2);
+            calculateCost(this.stations.get(o), this.stations.get(fD), firstDrop);
+            calculateCost(this.stations.get(fD), this.stations.get(sD), secondDrop);
             this.benefits = (this.demandSupplied - this.cost);
         }
         else {
