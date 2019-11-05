@@ -1,4 +1,4 @@
-# bicing-ai
+# Local Search AI
 Local Search AI practice.
 
 Input arguments:
