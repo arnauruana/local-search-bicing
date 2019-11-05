@@ -1,4 +1,7 @@
+
+
 # Local Search Bicing
+
 Local Search AI practice.
 
 Input arguments:
@@ -18,3 +21,10 @@ Input arguments:
 
 Testing: 
 hc r min sd 25 1250 0 2 5 0 0 0 0
+
+
+### Contributors
+
+![Aleix Marro](https://github.com/lethv)
+
+![Guillem Pla](https://github.com/guillempla)
