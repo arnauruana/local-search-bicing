@@ -25,6 +25,6 @@ hc r min sd 25 1250 0 2 5 0 0 0 0
 
 ### Authors
 
-- ![Aleix Marro](https://github.com/lethv)
-- ![Guillem Pla](https://github.com/guillempla)
-- ![Arnau Ruana](https://github.com/arnauruana)
+- @arnauruana
+- @guillempla
+- @lethv
