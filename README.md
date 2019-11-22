@@ -25,6 +25,6 @@ hc r min sd 25 1250 0 2 5 0 0 0 0
 
 ### Authors
 
-- @arnauruana
-- @guillempla
-- @lethv
+- [@arnauruana](https://github.com/arnauruana)
+- [@guillempla](https://github.com/guillempla)
+- [@lethv](https://github.com/lethv)
